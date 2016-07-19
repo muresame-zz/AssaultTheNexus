@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.gmail.lynx7478.anni.anniGame.AnniPlayer;
 import com.gmail.lynx7478.anni.anniGame.AnniTeam;
+import com.gmail.lynx7478.anni.anniGame.Game;
 
 public class ChangeTeamCommand implements CommandExecutor {
 
@@ -35,6 +36,19 @@ public class ChangeTeamCommand implements CommandExecutor {
 			}
 			AnniPlayer aP = AnniPlayer.getPlayer(t.getUniqueId());
 			AnniTeam team;
+			if(args[1].equalsIgnoreCase("leave"))
+			{
+				if(aP.getTeam() == null)
+				{
+					p.sendMessage(ChatColor.RED + t.getName() + " does not have a team.");
+					return false;
+				}
+				team = aP.getTeam();
+				team.leaveTeam(aP);
+				Game.LobbyMap.sendToSpawn(t);
+				p.sendMessage(ChatColor.GREEN+"Successfully removed "+ChatColor.AQUA+t.getName()+ChatColor.GREEN+" from team "+team.getColoredName()+ChatColor.GREEN+"!");
+				return true;
+			}
 			switch(args[1])
 			{
 			case "red":
@@ -61,6 +75,7 @@ public class ChangeTeamCommand implements CommandExecutor {
 			aP.getTeam().leaveTeam(aP);
 			team.joinTeam(aP);
 			t.setHealth(0.0);
+			p.sendMessage(ChatColor.GREEN + "Successfully put " + ChatColor.AQUA + t.getName() + ChatColor.GREEN + " in team " + team.getColoredName() + ChatColor.GREEN+"!");
 			
 		}
 		return false;

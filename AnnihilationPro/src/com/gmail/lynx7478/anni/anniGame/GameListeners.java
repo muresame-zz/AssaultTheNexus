@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -273,33 +274,37 @@ public class GameListeners implements Listener
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e)
 	{
-		if(e.getEntity().equals(Game.getGameMap().getBoss1()) || e.getEntity().equals(Game.getGameMap().getBoss2())) // <------
+		GameMap map = Game.getGameMap();
+		if(e.getEntity() != null && !(e.getEntity() instanceof Player) && e.getEntityType() == Game.getGameMap().getBoss1().getType())
 		{
-			if(e.getEntity().getKiller() instanceof Player)
+			if(e.getEntity().equals(Game.getGameMap().getBoss1()) || e.getEntity().equals(Game.getGameMap().getBoss2())) // <------
 			{
-				Player p = (Player) e.getEntity().getKiller();
-				AnniPlayer aP = AnniPlayer.getPlayer(p.getUniqueId());
-				p.getInventory().addItem(this.getReward());
-              	 for(Player pl : Bukkit.getOnlinePlayers())
-              	 {
-						try {
-							BufferedImage imageToSend = ImageIO.read(AnnihilationMain.getInstance().getResource("Images/Face.png"));
-							String[] text = Lang.BOSSKILLSMESSAGE.toStringArray();
-							for(int i = 0; i < text.length; i++)
-							{
-								if(text[i].contains("%PLAYER%"))
+				if(e.getEntity().getKiller() instanceof Player)
+				{
+					Player p = (Player) e.getEntity().getKiller();
+					AnniPlayer aP = AnniPlayer.getPlayer(p.getUniqueId());
+					p.getInventory().addItem(this.getReward());
+	              	 for(Player pl : Bukkit.getOnlinePlayers())
+	              	 {
+							try {
+								BufferedImage imageToSend = ImageIO.read(AnnihilationMain.getInstance().getResource("Images/Face.png"));
+								String[] text = Lang.BOSSKILLSMESSAGE.toStringArray();
+								for(int i = 0; i < text.length; i++)
 								{
-									text[i] = text[i].replace("%PLAYER%", aP.getTeam().getColor()+p.getName());
+									if(text[i].contains("%PLAYER%"))
+									{
+										text[i] = text[i].replace("%PLAYER%", aP.getTeam().getColor()+p.getName());
+									}
 								}
+								ImageMessage msg = new ImageMessage(imageToSend, 10, ImageChar.MEDIUM_SHADE.getChar());
+								msg.appendTextToLines(text.length, text);
+								msg.sendToPlayer(pl);
+								
+							} catch (IOException ex) {
+								ex.printStackTrace();
 							}
-							ImageMessage msg = new ImageMessage(imageToSend, 10, ImageChar.MEDIUM_SHADE.getChar());
-							msg.appendTextToLines(text.length, text);
-							msg.sendToPlayer(pl);
-							
-						} catch (IOException ex) {
-							ex.printStackTrace();
-						}
-              	 }
+	              	 }
+				}
 			}
 		}
 	}
