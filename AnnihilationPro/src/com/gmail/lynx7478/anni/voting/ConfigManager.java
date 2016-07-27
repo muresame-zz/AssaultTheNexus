@@ -52,6 +52,8 @@ public class ConfigManager
 			else 
 				gameVars = mainConfig.getConfigurationSection("GameVars");
 			
+			save += setDefaultIfNotSet(gameVars, "Hardcore", false);
+			
 			save += setDefaultIfNotSet(gameVars,"DefaultGameMode", "adventure");
 			
 			save += setDefaultIfNotSet(gameVars,"AutoStart.On", false);

@@ -54,6 +54,9 @@ public class GameVars
 	private static boolean useCivilianKit = true;
 	
 	private static boolean useMetrics = true;
+	
+	//TODO: Hardcore mode.
+	private static boolean hardcore;
 
 	public static int getEndOfGameCountdown()
 	{
@@ -181,6 +184,11 @@ public class GameVars
 		return useMetrics;
 	}
 	
+	public static boolean isHardcore()
+	{
+		return hardcore;
+	}
+	
 	public static void loadGameVars(ConfigurationSection config)
 	{
 		if(config != null)
@@ -205,7 +213,8 @@ public class GameVars
 				endGameCommand = command.trim();
 			ConfigurationSection gameVars = config.getConfigurationSection("GameVars");
 			if(gameVars != null)
-			{		
+			{
+				hardcore = gameVars.getBoolean("Hardcore");
 				ConfigurationSection auto = gameVars.getConfigurationSection("AutoStart");
 				AutoStart = auto.getBoolean("On");//auto.set("On", false);
 				PlayerstoStart = auto.getInt("PlayersToStart");//auto.set("PlayersToStart", 4);

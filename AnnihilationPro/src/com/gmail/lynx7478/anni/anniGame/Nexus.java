@@ -51,7 +51,7 @@ public class Nexus implements Listener
 		return Location;
 	}
 	
-	private void gameOverCheck()
+	public void gameOverCheck()
 	{
 		int total = AnniTeam.Teams.length;
 		int destroyed = 0;
@@ -69,7 +69,7 @@ public class Nexus implements Listener
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void NexusCheck(BlockBreakEvent event)
 	{
@@ -164,6 +164,52 @@ public class Nexus implements Listener
 					}
 				}
 			}
+		}
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void deathCheck()
+	{
+		if(Team.isTeamDead())
+		{
+			ScoreboardAPI.removeTeam(Team);
+//			for(AnniPlayer player : AnniPlayer.getPlayers().values())
+//			{
+//				Player pl = player.getPlayer();
+//				if(pl != null)
+//
+//					pl.getWorld().playSound(pl.getLocation(), Sound.EXPLODE, 1F, .8F);
+//			}
+			this.Location.toLocation().getBlock().setType(Material.BEDROCK);
+			try
+			{
+				BufferedImage image = ImageIO.read(AnnihilationMain.getInstance().getResource("Images/"+Team.getName()+"Team.png"));
+				String[] lore = new String[]
+				{
+					"",
+					"",
+					"",
+					"",
+					Lang.TEAMDESTROYED.toStringReplacement(Team.getExternalColoredName()),
+				};
+				ImageMessage message =  new ImageMessage(image, 10, ImageChar.MEDIUM_SHADE.getChar()).appendText(lore);
+				for(Player pl : Bukkit.getOnlinePlayers())
+				{
+					if(!VersionUtils.getVersion().contains("v1_9")){
+						pl.getWorld().playSound(pl.getLocation(), Sound.EXPLODE, 1F, .8F);
+					}else{
+						Class<Enum> cls = (Class<Enum>) Class.forName("org.bukkit.Sound");
+						pl.getWorld().playSound(pl.getLocation(), (Sound) Enum.valueOf(cls, "ENTITY_GENERIC_EXPLODE"), 1F, .8F);
+					}
+					message.sendToPlayer(pl);
+					AnnounceBar.getInstance().getBar().sendToPlayer(pl, ChatColor.GRAY + "The " + this.Team.getColoredName() + " has been defeated due to all players dying.", 0);
+				}
+			}
+			catch(Throwable t)
+			{
+				
+			}
+			gameOverCheck();									
 		}
 	}
 }

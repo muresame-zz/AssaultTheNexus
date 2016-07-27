@@ -26,6 +26,7 @@ import com.gmail.lynx7478.anni.anniGame.AnniTeam;
 import com.gmail.lynx7478.anni.anniGame.Game;
 import com.gmail.lynx7478.anni.anniGame.GameListeners;
 import com.gmail.lynx7478.anni.anniGame.GameVars;
+import com.gmail.lynx7478.anni.anniGame.Hardcore;
 import com.gmail.lynx7478.anni.anniGame.SpecificBreaking;
 import com.gmail.lynx7478.anni.anniGame.StandardPhaseHandler;
 import com.gmail.lynx7478.anni.anniMap.GameMap;
@@ -85,6 +86,11 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		ConfigManager.load(this); //Enables the loading of the main config file, this is now different from the lobby config file
 		
 		loadMainValues(); //This will load values from the main config file and load the lobby from the lobby config file
+		
+		if(GameVars.isHardcore())
+		{
+			new Hardcore();
+		}
 		
 		if(GameVars.getUseMetrics())
 		{

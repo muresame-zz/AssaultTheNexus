@@ -2,6 +2,7 @@ package com.gmail.lynx7478.anni.anniGame;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -9,20 +10,14 @@ import javax.imageio.ImageIO;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -46,6 +41,9 @@ import com.gmail.lynx7478.anni.utils.VersionUtils;
 
 public class GameListeners implements Listener
 {
+	
+	private ArrayList<String> offlinePlayers;
+	
 	public GameListeners(Plugin p)
 	{
         Bukkit.getPluginManager().registerEvents(this, p);
@@ -54,6 +52,7 @@ public class GameListeners implements Listener
 		String version = VersionUtils.getVersion();
 		if(version.contains("v1_8") || version.contains("v1_9"))
 			new ArmorStandListener(p);
+		offlinePlayers = new ArrayList<String>();
 	}
 
 	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
@@ -71,6 +70,10 @@ public class GameListeners implements Listener
 	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void deathHandler(PlayerDeathEvent event)
 	{
+		if(Hardcore.isCompetitive)
+		{
+			return;
+		}
 		final Player player = event.getEntity();
 		final AnniPlayer p = AnniPlayer.getPlayer(player.getUniqueId());
 		if(p != null)
@@ -160,6 +163,10 @@ public class GameListeners implements Listener
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void DeathListener(PlayerDeathEvent event)
 	{
+		if(Hardcore.isCompetitive)
+		{
+			return;
+		}
 		String message = "";
 		Player player = event.getEntity();
 		Player killer = player.getKiller();
@@ -198,6 +205,10 @@ public class GameListeners implements Listener
 	@EventHandler(priority=EventPriority.MONITOR,ignoreCancelled = true)
 	public void teleportToLobbyThing(PlayerJoinEvent event)
 	{
+		if(Hardcore.isCompetitive)
+		{
+			return;
+		}
 		final Player pl = event.getPlayer();
 		if(EnderChest.getChestFor(pl) == null)
 		{
@@ -241,6 +252,10 @@ public class GameListeners implements Listener
 	@EventHandler(priority=EventPriority.HIGHEST,ignoreCancelled = true)
 	public void respawnHandler(PlayerRespawnEvent event)
 	{
+		if(Hardcore.isCompetitive)
+		{
+			return;
+		}
 		final Player player = event.getPlayer();
 		final AnniPlayer p = AnniPlayer.getPlayer(player.getUniqueId());
 		if(p != null)
@@ -266,6 +281,7 @@ public class GameListeners implements Listener
 		if(GameVars.getKillOnLeave()){
 			p.setHealth(0.0);
 		}
+		this.offlinePlayers.add(p.getName());
 	}
 	
 	//TODO: Bosses
@@ -274,7 +290,6 @@ public class GameListeners implements Listener
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e)
 	{
-		GameMap map = Game.getGameMap();
 		if(e.getEntity() != null && !(e.getEntity() instanceof Player) && e.getEntityType() == Game.getGameMap().getBoss1().getType())
 		{
 			if(e.getEntity().equals(Game.getGameMap().getBoss1()) || e.getEntity().equals(Game.getGameMap().getBoss2())) // <------
