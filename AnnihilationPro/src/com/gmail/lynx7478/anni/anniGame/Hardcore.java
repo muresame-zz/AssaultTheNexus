@@ -1,15 +1,10 @@
 package com.gmail.lynx7478.anni.anniGame;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import javax.imageio.ImageIO;
-
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,19 +14,12 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.bobacadodl.imgmessage.ImageChar;
-import com.bobacadodl.imgmessage.ImageMessage;
 import com.gmail.lynx7478.anni.anniEvents.AnniEvent;
 import com.gmail.lynx7478.anni.anniEvents.PlayerKilledEvent;
 import com.gmail.lynx7478.anni.anniEvents.PlayerKilledEvent.KillAttribute;
-import com.gmail.lynx7478.anni.announcementBar.AnnounceBar;
 import com.gmail.lynx7478.anni.enderchest.EnderChest;
 import com.gmail.lynx7478.anni.main.AnnihilationMain;
 import com.gmail.lynx7478.anni.main.Lang;
-import com.gmail.lynx7478.anni.utils.VersionUtils;
-import com.gmail.lynx7478.anni.voting.ScoreboardAPI;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class Hardcore implements Listener {
 	
@@ -120,49 +108,5 @@ public class Hardcore implements Listener {
 			e.disallow(Result.KICK_OTHER, ChatColor.RED + "You cannot join a hardcore game when it's started.");
 		}
 	}
-	
-	@EventHandler
-	public void onJoin(PlayerJoinEvent event)
-	{
-		final Player pl = event.getPlayer();
-		if(EnderChest.getChestFor(pl) == null)
-		{
-			new EnderChest(pl);
-		}
-		if(Game.LobbyMap != null && Game.LobbyMap.getSpawn() != null)
-		{
-			final AnniPlayer p = AnniPlayer.getPlayer(pl.getUniqueId());
-			if(p != null )//&& Game.GameWorld != null)
-			{
-				/** if(p.getName().equals("Expl0itBypass") || p.getName().equals("Mr_Little_Kitty") || p.getName().equals("CUInOverwatch"))
-				{
-					Bukkit.broadcastMessage(ChatColor.RED + "You have been visited by the author of the Annihilation plugin!");
-				} **/
-				if(!Game.isGameRunning() || p.getTeam() == null || p.getTeam().isTeamDead() || pl.getLocation().getWorld().getName().equalsIgnoreCase(Game.LobbyMap.getWorldName()))
-				{
-					new BukkitRunnable()
-					{
-						@Override
-						public void run()
-						{
-							//Check if the lobbymap is not null when this actually runs
-							if(Game.LobbyMap != null)
-								Game.LobbyMap.sendToSpawn(pl);
-							
-//							pl.getInventory().clear();
-//							pl.getInventory().setArmorContents(null);
-//							pl.teleport(Game.LobbyLocation);
-//							pl.getInventory().addItem(CustomItem.KITMAP.toItemStack(1));
-//							pl.setHealth(pl.getMaxHealth());
-//							pl.setFoodLevel(20);
-							//pl.setGameMode(GameMode.ADVENTURE);
-						}
-					}.runTaskLater(AnnihilationMain.getInstance(),20L);
-				}
-			}
-		}
-	}
-	
-	
 
 }

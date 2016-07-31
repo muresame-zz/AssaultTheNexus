@@ -205,11 +205,11 @@ public class GameListeners implements Listener
 	@EventHandler(priority=EventPriority.MONITOR,ignoreCancelled = true)
 	public void teleportToLobbyThing(PlayerJoinEvent event)
 	{
-		if(Hardcore.isCompetitive)
-		{
-			return;
-		}
 		final Player pl = event.getPlayer();
+		if(this.offlinePlayers.contains(pl))
+		{
+			pl.teleport(AnniPlayer.getPlayer(pl.getUniqueId()).getTeam().getRandomSpawn());
+		}
 		if(EnderChest.getChestFor(pl) == null)
 		{
 			new EnderChest(pl);
