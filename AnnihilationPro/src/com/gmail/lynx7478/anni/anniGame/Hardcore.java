@@ -11,13 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.gmail.lynx7478.anni.anniEvents.AnniEvent;
 import com.gmail.lynx7478.anni.anniEvents.PlayerKilledEvent;
 import com.gmail.lynx7478.anni.anniEvents.PlayerKilledEvent.KillAttribute;
-import com.gmail.lynx7478.anni.enderchest.EnderChest;
 import com.gmail.lynx7478.anni.main.AnnihilationMain;
 import com.gmail.lynx7478.anni.main.Lang;
 
@@ -94,16 +91,11 @@ public class Hardcore implements Listener {
 	@EventHandler
 	public void onLogin(AsyncPlayerPreLoginEvent e)
 	{
-		Player p = Bukkit.getPlayer(e.getUniqueId());
-		if(p.hasPermission("Anni.HardcoreBypass"))
-		{
-			return;
-		}
-		if(Game.isGameRunning())
+		if(this.deadPlayers.contains(e.getUniqueId()))
 		{
 			e.disallow(Result.KICK_OTHER, ChatColor.RED + "You cannot join a hardcore game when it's started.");
 		}
-		if(this.deadPlayers.contains(e.getUniqueId()))
+		if(Game.isGameRunning())
 		{
 			e.disallow(Result.KICK_OTHER, ChatColor.RED + "You cannot join a hardcore game when it's started.");
 		}
