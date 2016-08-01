@@ -206,7 +206,7 @@ public class GameListeners implements Listener
 	public void teleportToLobbyThing(PlayerJoinEvent event)
 	{
 		final Player pl = event.getPlayer();
-		if(this.offlinePlayers.contains(pl))
+		if(this.offlinePlayers.contains(pl.getName()))
 		{
 			pl.teleport(AnniPlayer.getPlayer(pl.getUniqueId()).getTeam().getRandomSpawn());
 		}
@@ -284,44 +284,45 @@ public class GameListeners implements Listener
 		this.offlinePlayers.add(p.getName());
 	}
 	
-	//TODO: Bosses
-	
 	//TODO: Fix this.
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e)
 	{
-		if(e.getEntity() != null && !(e.getEntity() instanceof Player) && e.getEntityType() == Game.getGameMap().getBoss1().getType())
+		if(e.getEntity() == null)
 		{
-			if(e.getEntity().equals(Game.getGameMap().getBoss1()) || e.getEntity().equals(Game.getGameMap().getBoss2())) // <------
-			{
-				if(e.getEntity().getKiller() instanceof Player)
-				{
-					Player p = (Player) e.getEntity().getKiller();
-					AnniPlayer aP = AnniPlayer.getPlayer(p.getUniqueId());
-					p.getInventory().addItem(this.getReward());
-	              	 for(Player pl : Bukkit.getOnlinePlayers())
-	              	 {
-							try {
-								BufferedImage imageToSend = ImageIO.read(AnnihilationMain.getInstance().getResource("Images/Face.png"));
-								String[] text = Lang.BOSSKILLSMESSAGE.toStringArray();
-								for(int i = 0; i < text.length; i++)
-								{
-									if(text[i].contains("%PLAYER%"))
-									{
-										text[i] = text[i].replace("%PLAYER%", aP.getTeam().getColor()+p.getName());
-									}
-								}
-								ImageMessage msg = new ImageMessage(imageToSend, 10, ImageChar.MEDIUM_SHADE.getChar());
-								msg.appendTextToLines(text.length, text);
-								msg.sendToPlayer(pl);
-								
-							} catch (IOException ex) {
-								ex.printStackTrace();
-							}
-	              	 }
-				}
-			}
+			return;
 		}
+		if(e.getEntity().getKiller() != null)
+		{
+			return;
+		}
+		if(e.getEntity() != Game.getGameMap().getBoss1() || e.getEntity() != Game.getGameMap().getBoss2())
+		{
+			return;
+		}
+		Player p = (Player) e.getEntity().getKiller();
+		AnniPlayer aP = AnniPlayer.getPlayer(p.getUniqueId());
+		p.getInventory().addItem(this.getReward());
+      	 for(Player pl : Bukkit.getOnlinePlayers())
+      	 {
+				try {
+					BufferedImage imageToSend = ImageIO.read(AnnihilationMain.getInstance().getResource("Images/Face.png"));
+					String[] text = Lang.BOSSKILLSMESSAGE.toStringArray();
+					for(int i = 0; i < text.length; i++)
+					{
+						if(text[i].contains("%PLAYER%"))
+						{
+							text[i] = text[i].replace("%PLAYER%", aP.getTeam().getColor()+p.getName());
+						}
+					}
+					ImageMessage msg = new ImageMessage(imageToSend, 10, ImageChar.MEDIUM_SHADE.getChar());
+					msg.appendTextToLines(text.length, text);
+					msg.sendToPlayer(pl);
+					
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+      	 }
 	}
 	
 	private ItemStack getReward()
