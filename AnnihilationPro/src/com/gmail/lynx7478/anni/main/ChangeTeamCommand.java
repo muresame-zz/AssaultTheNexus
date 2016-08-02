@@ -23,15 +23,20 @@ public class ChangeTeamCommand implements CommandExecutor {
 				return false;
 			}
 			Player p = (Player) sender;
+			if(!p.hasPermission("Anni.ChangeTeam"))
+			{
+				p.sendMessage(Lang.NO_PERMISSION.toString().replaceAll("%COMMAND%", "/"+changeteam.getName()));
+				return false;
+			}
 			if(args.length != 2)
 			{
-				p.sendMessage(ChatColor.RED+"Usage: /changeteam <Player> <Team>");
+				p.sendMessage(Lang.CHANGETEAM_USAGE.toString());
 				return false;
 			}
 			Player t = Bukkit.getPlayer(args[0]);
 			if(t == null)
 			{
-				p.sendMessage(ChatColor.RED+args[0]+" is not a valid player or is not online.");
+				p.sendMessage(Lang.INVALID_PLAYER.toString().replaceAll("%PLAYER%", args[0]));
 				return false;
 			}
 			AnniPlayer aP = AnniPlayer.getPlayer(t.getUniqueId());
@@ -40,13 +45,13 @@ public class ChangeTeamCommand implements CommandExecutor {
 			{
 				if(aP.getTeam() == null)
 				{
-					p.sendMessage(ChatColor.RED + t.getName() + " does not have a team.");
+					p.sendMessage(Lang.NO_TEAM.toString().replaceAll("%PLAYER%", t.getName()));
 					return false;
 				}
 				team = aP.getTeam();
 				team.leaveTeam(aP);
 				Game.LobbyMap.sendToSpawn(t);
-				p.sendMessage(ChatColor.GREEN+"Successfully removed "+ChatColor.AQUA+t.getName()+ChatColor.GREEN+" from team "+team.getColoredName()+ChatColor.GREEN+"!");
+				p.sendMessage(Lang.REMOVED_TEAM.toString().replaceAll("%PLAYER%", t.getName()).replaceAll("%TEAM%", team.getColoredName()));
 				return true;
 			}
 			switch(args[1])
@@ -75,7 +80,7 @@ public class ChangeTeamCommand implements CommandExecutor {
 			aP.getTeam().leaveTeam(aP);
 			team.joinTeam(aP);
 			t.setHealth(0.0);
-			p.sendMessage(ChatColor.GREEN + "Successfully put " + ChatColor.AQUA + t.getName() + ChatColor.GREEN + " in team " + team.getColoredName() + ChatColor.GREEN+"!");
+			p.sendMessage(Lang.CHANGED_TEAM.toString().replaceAll("%PLAYER%", t.getName()).replaceAll("%TEAM%", team.getColoredName()));
 			
 		}
 		return false;

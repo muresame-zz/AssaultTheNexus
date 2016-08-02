@@ -84,6 +84,8 @@ public enum Lang
 	//Kits
 	LOCKED("locked-kit",ChatColor.RED+"LOCKED"),
 	UNLOCKED("unlocked-kit",ChatColor.GREEN+"UNLOCKED"),
+	MENU("menu-name","%PLAYER%'s Kits"),
+	SELECTED("select-kit",ChatColor.DARK_PURPLE+"%KIT% selected."),
 	
 	//Phase bar
 	PHASEBAR("phase-bar-name", "Phase %#"),
@@ -97,12 +99,25 @@ public enum Lang
 	PHASESTART("phase-start",ChatColor.GOLD+"Phase %#"+ChatColor.GRAY+" has started"),
 	
 	//Phase messages
+	GAMESTART("game-begun",ChatColor.GREEN+"The game has begun!"),
+	GAMENOTSTART("game-not-started",ChatColor.RED+"The game was not started!"),
+	GAMERUNNING("game-already-running",ChatColor.RED+"The game is already running."),
 	PHASE1MESSAGE("phase-1-message",ChatColor.GRAY+"The nexus is "+ChatColor.GOLD+"invincible"),
 	PHASE2MESSAGE("phase-2-message",ChatColor.GRAY+"the nexus has "+ChatColor.GOLD+"lost"+ChatColor.GRAY+" its "+ChatColor.GOLD+"invincibility"),
 	PHASE3MESSAGE("phase-3-message",ChatColor.AQUA+"Diamonds "+ChatColor.GRAY+"have spawned in the middle"+"%n"+ChatColor.GRAY+"of the map"),
 	PHASE4MESSAGE("phase-4-message",ChatColor.GOLD+"Blaze Powder "+ChatColor.GRAY+"is now available"+"%n"+ChatColor.GRAY+"from the brewing shop"+"%n"+ChatColor.RED+"The bosses"+"%n"+ChatColor.GRAY+"have spawned in their coliseums."),
 	BOSSKILLSMESSAGE("boss-kill-message","%PLAYER% &4 has killed the boss"+"%n"+"&4 and has received a reward!"),
-	PHASE5MESSAGE("phase-5-message",ChatColor.GOLD+"Extra damage "+ChatColor.GRAY+"is inflicted on the "+ChatColor.GOLD+"nexus"+"%n"+ChatColor.GRAY+"when breaking it"+"%n"+ChatColor.RED+"x2 "+ChatColor.GOLD+"extra damage");
+	PHASE5MESSAGE("phase-5-message",ChatColor.GOLD+"Extra damage "+ChatColor.GRAY+"is inflicted on the "+ChatColor.GOLD+"nexus"+"%n"+ChatColor.GRAY+"when breaking it"+"%n"+ChatColor.RED+"x2 "+ChatColor.GOLD+"extra damage"),
+	
+	// Misc
+	NO_PERMISSION("no-permission",ChatColor.RED+"Sorry, you do not have permission to execute %COMMAND%!"),
+	
+	// Commands
+	CHANGED_TEAM("changed-team", ChatColor.GREEN + "Successfully put " + ChatColor.AQUA + "%PLAYER%" + ChatColor.GREEN + " in team " + "%TEAM%" + ChatColor.GREEN+"!"),
+	REMOVED_TEAM("removed-from-team",ChatColor.GREEN+"Successfully removed "+ChatColor.AQUA+"%PLAYER%"+ChatColor.GREEN+" from team "+"%TEAM%"+ChatColor.GREEN+"!"),
+	NO_TEAM("no-team", ChatColor.RED + "%PLAYER%" + " does not have a team."),
+	INVALID_PLAYER("invalid-player",ChatColor.RED+"%PLAYER%"+" is not a valid player or is not online."),
+	CHANGETEAM_USAGE("change-team-usage", ChatColor.RED+"Usage: /changeteam <Player> <Team>");
 
 	//TEST("","");
  

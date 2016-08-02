@@ -224,7 +224,7 @@ public class KitLoading implements Listener, CommandExecutor
 		ItemMenu menu = menus.get(player.getUniqueId());
 		if(menu == null)
 		{
-			menu = new ItemMenu(player.getName()+"'s Kits",Size.fit(items.length));
+			menu = new ItemMenu(Lang.MENU.toString().replaceAll("%PLAYER%", player.getName()),Size.fit(items.length));
 			for(int x = 0; x < items.length; x++)
 				menu.setItem(x, items[x]);
 			menus.put(player.getUniqueId(), menu);

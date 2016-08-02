@@ -251,11 +251,11 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 				if(!Game.isGameRunning())
 				{
 					if(Game.startGame())
-						sender.sendMessage(ChatColor.GREEN+"The game has begun!");
+						sender.sendMessage(Lang.GAMESTART.toString());
 					else 
-						sender.sendMessage(ChatColor.RED+"The game was not started!");
+						sender.sendMessage(Lang.GAMENOTSTART.toString());
 				}
-				else sender.sendMessage(ChatColor.RED+"The game is already running.");
+				else sender.sendMessage(Lang.GAMERUNNING.toString());
 			}
 
 			@Override

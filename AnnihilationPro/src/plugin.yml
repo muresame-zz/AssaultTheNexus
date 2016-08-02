@@ -1,6 +1,6 @@
 name: Annihilation
 main: com.gmail.lynx7478.anni.main.AnnihilationMain
-version: 1.4.6
+version: 1.4.7
 authors: [Mr_Little_Kitty, SKA4]
 description: Annihilation minigame plugin.
 commands:
@@ -39,4 +39,6 @@ permissions:
   Anni.BypassJoin:
     default: false
   Anni.EC:
+    default: false
+  Anni.ChangeTeam:
     default: false

@@ -54,7 +54,7 @@ public class KitMenuItem extends MenuItem
 					if(Game.isGameRunning() && anniplayer.getKit() != null)
 						anniplayer.getKit().cleanup(player);
 					anniplayer.setKit(kit);
-					player.sendMessage(ChatColor.DARK_PURPLE+kit.getName()+" selected.");
+					player.sendMessage(Lang.SELECTED.toString().replaceAll("%KIT%", kit.getName()));
 					if(Game.isGameRunning() && anniplayer.getTeam() != null)
 						player.setHealth(0);
 				}
