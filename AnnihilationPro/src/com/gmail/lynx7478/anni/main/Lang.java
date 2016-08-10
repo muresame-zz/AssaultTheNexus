@@ -76,6 +76,8 @@ public enum Lang
 	REDTEAM("red-team","Red"),
 	GREENTEAM("green-team","Green"),
 	BLUETEAM("blue-team","Blue"),
+	LEAVE("leave-team", ChatColor.AQUA+"Leave a Team"),
+	TEAMMENU("team-menu", "Join a Team"),
 	
 	//Chat
 	ALL("all-chat","All"),

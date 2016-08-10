@@ -43,7 +43,7 @@ public class TeamCommand implements CommandExecutor, Listener
 	private Map<ChatColor,ImageMessage> messages;
 	public TeamCommand(JavaPlugin plugin)
 	{
-		menu = new ItemMenu("Join a Team",Size.ONE_LINE);
+		menu = new ItemMenu(Lang.TEAMMENU.toString(),Size.ONE_LINE);
 		messages = new EnumMap<ChatColor,ImageMessage>(ChatColor.class);
 		plugin.getCommand("Team").setExecutor(this);
 		Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -99,7 +99,7 @@ public class TeamCommand implements CommandExecutor, Listener
 			menu.setItem(x, item);
 			x++;
 		}
-		menu.setItem(4, new ActionMenuItem(ChatColor.AQUA+"Leave a Team",new ItemClickHandler(){
+		menu.setItem(4, new ActionMenuItem(Lang.LEAVE.toString(),new ItemClickHandler(){
 			@Override
 			public void onItemClick(ItemClickEvent event)
 			{
