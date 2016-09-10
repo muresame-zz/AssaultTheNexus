@@ -92,11 +92,6 @@ public final class AnniTeam
 		scoreboardTeam.setAllowFriendlyFire(false);
 		scoreboardTeam.setCanSeeFriendlyInvisibles(true);
 		scoreboardTeam.setPrefix(this.getColor().toString());
-		if(VersionUtils.getVersion().contains("v1_8") || VersionUtils.getVersion().contains("v1_9") || VersionUtils.getVersion().contains("v1_10")){
-			if(GameVars.getHideTags()){
-				scoreboardTeam.setNameTagVisibility(NameTagVisibility.HIDE_FOR_OTHER_TEAMS);
-			}
-		}
 	}
 	
 	public ChatColor getColor()
