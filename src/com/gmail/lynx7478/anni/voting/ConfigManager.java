@@ -36,6 +36,7 @@ public class ConfigManager
 			save += setDefaultIfNotSet(mainConfig,"Kill-On-Leave", false);
 			save += setDefaultIfNotSet(mainConfig, "Hide-Other-Teams-Tag", true);
 			save += setDefaultIfNotSet(mainConfig, "Use-Specific-Breaking", true);
+			save += setDefaultIfNotSet(mainConfig, "Use-PEX", true);
 
             if(mainConfig.isSet("Kill-On-Leave"))
             {

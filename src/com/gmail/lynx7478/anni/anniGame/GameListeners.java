@@ -27,6 +27,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import ru.tehkode.permissions.bukkit.PermissionsEx;
+
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
 import com.gmail.lynx7478.anni.anniEvents.AnniEvent;
@@ -144,15 +146,33 @@ public class GameListeners implements Listener
 		{
 			AnniPlayer p = AnniPlayer.getPlayer(event.getPlayer().getUniqueId());
 			if(p.getTeam() == null)
-				event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + " %s"+ChatColor.WHITE+": %s");
+				if(!AnnihilationMain.getInstance().hasPEX())
+				{
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + " %s"+ChatColor.WHITE+": %s");
+				}else
+				{
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + PermissionsEx.getUser(p.getPlayer()).getPrefix()+" %s"+ChatColor.WHITE+": %s");
+				}
 			else if(event.getMessage().startsWith("!"))
 			{
 				event.setMessage(event.getMessage().substring(1));
-				event.setFormat(g+"(" + Lang.ALL + ")" + " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]" +g+ " %s"+ChatColor.WHITE+": %s");
+				if(!AnnihilationMain.getInstance().hasPEX())
+				{
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g +" %s"+ChatColor.WHITE+": %s");
+				}else
+				{
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + PermissionsEx.getUser(p.getPlayer()).getPrefix()+" %s"+ChatColor.WHITE+": %s");
+				}
 			}
 			else
 			{
-				event.setFormat(g+"(" + Lang.TEAM + ")" +  " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]"+g+ " %s"+ChatColor.WHITE+": %s");
+				if(!AnnihilationMain.getInstance().hasPEX())
+				{
+					event.setFormat(g+"(" + Lang.TEAM + ")" +  " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]"+g+ " %s"+ChatColor.WHITE+": %s");
+				}else
+				{
+					event.setFormat(g+"(" + Lang.TEAM + ")" +  " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]"+g+ PermissionsEx.getUser(p.getPlayer()).getPrefix()+" %s"+ChatColor.WHITE+": %s");
+				}
 				event.getRecipients().clear();
 				for(AnniPlayer pl : p.getTeam().getPlayers())
 					if(pl.isOnline())

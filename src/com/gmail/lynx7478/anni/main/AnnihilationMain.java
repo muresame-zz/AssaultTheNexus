@@ -54,6 +54,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 { 
 	//public static boolean useProtocalHack = false;
 	//public static final String Name = "Annihilation";
+	
 	private static AnnihilationMain instance;
 	
 	private boolean hasEssentials;
@@ -61,6 +62,13 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	public static AnnihilationMain getInstance()
 	{
 		return instance;
+	}
+	
+	private boolean pex;
+	
+	public boolean hasPEX()
+	{
+		return pex;
 	}
 	
 	
@@ -102,9 +110,15 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			{
 				e.printStackTrace();
 			}
-		}else
+		}
+		
+		//TODO: PermissionsEx Hook.
+		if(GameVars.usePEX())
 		{
-			
+			if(this.getServer().getPluginManager().getPlugin("PermissionsEx") != null)
+			{
+				this.pex = true;
+			}
 		}
 		
 		VoteMapManager.registerListener(this);
@@ -150,13 +164,13 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		new EnderChest();
 		//XPSystem.loadXPSystem(this,ConfigManager.getConfig().getConfigurationSection("XP-System"));
 		new KitLoading(this); //No real reason to come last, but I kind of feel since its the heaviest processing power user, it should be last
-		if(this.getServer().getPluginManager().getPlugin("Essentials") != null && this.getServer().getPluginManager().getPlugin("EssentialsChat") != null)
-		{
-			this.hasEssentials = true;
-		}else
-		{
-			this.hasEssentials = false;
-		}
+//		if(this.getServer().getPluginManager().getPlugin("Essentials") != null && this.getServer().getPluginManager().getPlugin("EssentialsChat") != null)
+//		{
+//			this.hasEssentials = true;
+//		}else
+//		{
+//			this.hasEssentials = false;
+//		}
 		this.getServer().getPluginManager().registerEvents(new SpecificBreaking(), this);
 		
 		this.getCommand("changeteam").setExecutor(new ChangeTeamCommand());

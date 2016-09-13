@@ -45,18 +45,19 @@ public class GameVars
 
 	private static int endOfGameCountdown = 120;
 	
-	//TODO: Invisble settings
 	private static boolean revealOnBreak;
 	private static boolean revealOnHit;
 	private static boolean revealOnDamage;
 	
-	//TODO: Use civilian kit.
 	private static boolean useCivilianKit = true;
 	
 	private static boolean useMetrics = true;
 	
 	//TODO: Hardcore mode.
 	private static boolean hardcore;
+	
+	// PEX Hook.
+	private static boolean usePEX;
 
 	public static int getEndOfGameCountdown()
 	{
@@ -189,6 +190,11 @@ public class GameVars
 		return hardcore;
 	}
 	
+	public static boolean usePEX()
+	{
+		return usePEX;
+	}
+	
 	public static void loadGameVars(ConfigurationSection config)
 	{
 		if(config != null)
@@ -202,6 +208,7 @@ public class GameVars
 			hideTags = config.getBoolean("Hide-Other-Teams-Tag");
 			useSpecificBreaking = config.getBoolean("Use-Specific-Breaking");
 			useMetrics = config.getBoolean("Use-Metrics");
+			usePEX = config.getBoolean("Use-PEX");
 			if(useEC){
 				if(!(ecSlots % 9 == 0)){
 					Bukkit.getLogger().log(Level.SEVERE, "The enderchest slots must be a multiple of 9!!");
