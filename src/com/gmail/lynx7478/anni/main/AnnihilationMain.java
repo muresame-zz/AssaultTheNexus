@@ -1,8 +1,13 @@
 
 package com.gmail.lynx7478.anni.main;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -76,15 +81,41 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	public void onEnable()
 	{
 		instance = this;
-		/** if(!this.getRemoteVersion().contains(this.getDescription().getVersion()))
+		try {
+			if(this.needsUpdating())
+			{
+				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
+				Bukkit.getLogger().log(Level.SEVERE, "Annihilation is out of date.");
+				Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
+				Bukkit.getLogger().log(Level.SEVERE, "from Spigot.");
+				Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
+				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
+				this.getPluginLoader().disablePlugin(this);
+			}
+		} catch (IOException e1) 
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "---------------------");
-			Bukkit.getLogger().log(Level.SEVERE, "ANNIHILATION NEEDS UPDATING!!");
-			Bukkit.getLogger().log(Level.SEVERE, "CURRENT VERSION: " + this.getDescription().getVersion());
-			Bukkit.getLogger().log(Level.SEVERE, "PLEASE UPDATE FROM SPIGOT!!");
-			Bukkit.getLogger().log(Level.SEVERE, "SHUTTING DOWN SERVER!");
-			Bukkit.getLogger().log(Level.SEVERE, "---------------------");
-		} **/
+			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
+			e1.printStackTrace();
+			this.getPluginLoader().disablePlugin(this);
+		}
+		
+		try {
+			if(this.blacklistedVersion())
+			{
+				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
+				Bukkit.getLogger().log(Level.SEVERE, "This Annihilation version was comprimised.");
+				Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
+				Bukkit.getLogger().log(Level.SEVERE, "from Spigot.");
+				Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
+				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
+				this.getPluginLoader().disablePlugin(this);
+			}
+		} catch (IOException e1) 
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
+			e1.printStackTrace();
+			this.getPluginLoader().disablePlugin(this);
+		}
 		loadLang();
 		new InvisibilityListeners(this);
 		Bukkit.getPluginManager().registerEvents(this,this);
@@ -629,20 +660,42 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		}
 	}
 	
-	/** private String getRemoteVersion()
+	private boolean needsUpdating() throws IOException
 	{
-		try
+		URL url = new URL("http://ska4.me/anni");
+		 URLConnection yc = url.openConnection();
+	        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+	        {
+	            String inputLine;
+	                String version = this.getDescription().getVersion();
+	                        while ((inputLine = in.readLine()) != null) {
+	                         
+	                          if (inputLine.equalsIgnoreCase(version)){
+	                              return false;
+	                          }
+	                       }
+	                   }
+	        return true;
+	}
+	
+	private boolean blacklistedVersion() throws IOException
+	{
+		URL url = new URL("http://ska4.me/blacklist");
+		URLConnection yc = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 		{
-			//TODO: Find an alternative or set up Maven.
-			URL url = new URL("http://91.134.196.111/index.html");
-			InputStream in = url.openStream();
-			return IOUtils.toString(in);
-		}catch(Exception e)
-		{
-			e.printStackTrace();
+			String inputLine;
+			String version = this.getDescription().getVersion();
+			while((inputLine = in.readLine()) != null)
+			{
+				if(inputLine.equalsIgnoreCase(version))
+				{
+					return true;
+				}
+			}
 		}
-		return this.getDescription().getVersion();
-	} **/
+		return false;
+	}
 	
 	public boolean hasEssentials()
 	{
