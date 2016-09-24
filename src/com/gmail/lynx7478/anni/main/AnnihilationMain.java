@@ -91,21 +91,23 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 				Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
 				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 				this.getPluginLoader().disablePlugin(this);
+				return;
 			}
 		} catch (IOException e1) 
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
 			e1.printStackTrace();
 			this.getPluginLoader().disablePlugin(this);
+			return;
 		}
 		
 		try {
 			if(this.blacklistedVersion())
 			{
 				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-				Bukkit.getLogger().log(Level.SEVERE, "This Annihilation version was comprimised.");
+				Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly is this Annihilation version.");
 				Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
-				Bukkit.getLogger().log(Level.SEVERE, "from Spigot.");
+				Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKA4 immediately.)");
 				Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
 				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 				this.getPluginLoader().disablePlugin(this);
@@ -115,6 +117,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
 			e1.printStackTrace();
 			this.getPluginLoader().disablePlugin(this);
+			return;
 		}
 		loadLang();
 		new InvisibilityListeners(this);
