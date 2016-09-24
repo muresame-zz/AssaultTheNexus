@@ -665,14 +665,14 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	
 	private boolean needsUpdating() throws IOException
 	{
-		URL url = new URL("http://ska4.me/anni");
+		URL url = new URL("http://37.139.12.5/anni/index.html");
 		 URLConnection yc = url.openConnection();
 	        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 	        {
 	            String inputLine;
 	                String version = this.getDescription().getVersion();
 	                        while ((inputLine = in.readLine()) != null) {
-	                         
+	                         System.out.println(inputLine);
 	                          if (inputLine.equalsIgnoreCase(version)){
 	                              return false;
 	                          }
@@ -683,7 +683,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	
 	private boolean blacklistedVersion() throws IOException
 	{
-		URL url = new URL("http://ska4.me/blacklist");
+		URL url = new URL("http://37.139.12.5/blacklist/index.html");
 		URLConnection yc = url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 		{
