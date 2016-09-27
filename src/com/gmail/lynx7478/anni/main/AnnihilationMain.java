@@ -46,6 +46,7 @@ import com.gmail.lynx7478.anni.itemMenus.ItemClickHandler;
 import com.gmail.lynx7478.anni.itemMenus.MenuItem;
 import com.gmail.lynx7478.anni.kits.CustomItem;
 import com.gmail.lynx7478.anni.kits.KitLoading;
+import com.gmail.lynx7478.anni.main.hooks.GroupManagerHook;
 import com.gmail.lynx7478.anni.mapBuilder.MapBuilder;
 import com.gmail.lynx7478.anni.utils.DamageControl;
 import com.gmail.lynx7478.anni.utils.InvisibilityListeners;
@@ -74,6 +75,13 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	public boolean hasPEX()
 	{
 		return pex;
+	}
+	
+	private GroupManagerHook gMH;
+	
+	public GroupManagerHook getGroupManager()
+	{
+		return gMH;
 	}
 	
 	
@@ -154,6 +162,8 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 				this.pex = true;
 			}
 		}
+		
+		this.getServer().getPluginManager().registerEvents(new GroupManagerHook(this), this);
 		
 		VoteMapManager.registerListener(this);
 		AnniCommand.register(this);

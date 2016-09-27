@@ -19,7 +19,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.server.ServerListPingEvent;
@@ -146,32 +145,41 @@ public class GameListeners implements Listener
 		{
 			AnniPlayer p = AnniPlayer.getPlayer(event.getPlayer().getUniqueId());
 			if(p.getTeam() == null)
-				if(!AnnihilationMain.getInstance().hasPEX())
+				if(!AnnihilationMain.getInstance().hasPEX() && !AnnihilationMain.getInstance().getGroupManager().hasGroupManager())
 				{
 					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + " %s"+ChatColor.WHITE+": %s");
+				}else if(AnnihilationMain.getInstance().getGroupManager().hasGroupManager())
+				{
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + ChatColor.translateAlternateColorCodes('&', AnnihilationMain.getInstance().getGroupManager().getPrefix(p.getPlayer()))+" %s"+ChatColor.WHITE+": %s");
 				}else
 				{
-					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + PermissionsEx.getUser(p.getPlayer()).getPrefix()+" %s"+ChatColor.WHITE+": %s");
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + ChatColor.translateAlternateColorCodes('&', PermissionsEx.getUser(p.getPlayer()).getPrefix())+" %s"+ChatColor.WHITE+": %s");
 				}
 			else if(event.getMessage().startsWith("!"))
 			{
 				event.setMessage(event.getMessage().substring(1));
-				if(!AnnihilationMain.getInstance().hasPEX())
+				if(!AnnihilationMain.getInstance().hasPEX() && !AnnihilationMain.getInstance().getGroupManager().hasGroupManager())
 				{
-					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g +" %s"+ChatColor.WHITE+": %s");
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+p.getTeam().getColoredName()+g+"]" + g +" %s"+ChatColor.WHITE+": %s");
+				}else if(AnnihilationMain.getInstance().getGroupManager().hasGroupManager())
+				{
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+p.getTeam().getColoredName()+g+"]" + g + ChatColor.translateAlternateColorCodes('&', AnnihilationMain.getInstance().getGroupManager().getPrefix(p.getPlayer()))+" %s"+ChatColor.WHITE+": %s");
 				}else
 				{
-					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+ChatColor.DARK_PURPLE+Lang.LOBBY+g+"]" + g + PermissionsEx.getUser(p.getPlayer()).getPrefix()+" %s"+ChatColor.WHITE+": %s");
+					event.setFormat(g+"(" + Lang.ALL + ")" + " ["+p.getTeam().getColoredName()+g+"]" + g + ChatColor.translateAlternateColorCodes('&', PermissionsEx.getUser(p.getPlayer()).getPrefix())+" %s"+ChatColor.WHITE+": %s");
 				}
 			}
 			else
 			{
-				if(!AnnihilationMain.getInstance().hasPEX())
+				if(!AnnihilationMain.getInstance().hasPEX() && !AnnihilationMain.getInstance().getGroupManager().hasGroupManager())
 				{
 					event.setFormat(g+"(" + Lang.TEAM + ")" +  " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]"+g+ " %s"+ChatColor.WHITE+": %s");
+				}else if(AnnihilationMain.getInstance().getGroupManager().hasGroupManager())
+				{
+					event.setFormat(g+"(" + Lang.TEAM + ")" +  " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]"+g+ ChatColor.translateAlternateColorCodes('&', AnnihilationMain.getInstance().getGroupManager().getPrefix(p.getPlayer()))+" %s"+ChatColor.WHITE+": %s");
 				}else
 				{
-					event.setFormat(g+"(" + Lang.TEAM + ")" +  " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]"+g+ PermissionsEx.getUser(p.getPlayer()).getPrefix()+" %s"+ChatColor.WHITE+": %s");
+					event.setFormat(g+"(" + Lang.TEAM + ")" +  " ["+p.getTeam().getColor()+p.getTeam().toString()+g+"]"+g+ ChatColor.translateAlternateColorCodes('&', PermissionsEx.getUser(p.getPlayer()).getPrefix())+" %s"+ChatColor.WHITE+": %s");
 				}
 				event.getRecipients().clear();
 				for(AnniPlayer pl : p.getTeam().getPlayers())

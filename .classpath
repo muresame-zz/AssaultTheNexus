@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="C:/Users/Gabi/Documents/Java/Libraries/spigot-1.9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Gabi/Documents/Java/Libraries/spigot-1.10.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Gabi/Downloads/PermissionsEx-1.23.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Gabi/Documents/Java/Libraries/EssentialsGroupManager.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
