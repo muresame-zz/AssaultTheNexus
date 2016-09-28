@@ -84,6 +84,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		return gMH;
 	}
 	
+	private String version = "1.5.2";
 	
 	@Override
 	public void onEnable()
@@ -680,7 +681,6 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 	        {
 	            String inputLine;
-	                String version = this.getDescription().getVersion();
 	                        while ((inputLine = in.readLine()) != null) {
 	                         System.out.println(inputLine);
 	                          if (inputLine.equalsIgnoreCase(version)){
@@ -698,7 +698,6 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 		{
 			String inputLine;
-			String version = this.getDescription().getVersion();
 			while((inputLine = in.readLine()) != null)
 			{
 				if(inputLine.equalsIgnoreCase(version))
