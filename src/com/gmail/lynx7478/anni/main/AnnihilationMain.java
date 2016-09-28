@@ -164,7 +164,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			}
 		}
 		
-		new GroupManagerHook(this);
+		this.gMH = new GroupManagerHook(this);
 		
 		VoteMapManager.registerListener(this);
 		AnniCommand.register(this);
