@@ -23,6 +23,7 @@ public class GroupManagerHook implements Listener {
 	public GroupManagerHook(final Plugin plugin)
 	{
 		this.plugin = plugin;
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	public boolean hasGroupManager()
