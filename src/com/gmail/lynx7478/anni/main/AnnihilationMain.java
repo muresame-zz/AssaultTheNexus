@@ -84,7 +84,8 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		return gMH;
 	}
 	
-	private String version = "1.5.2";
+	//TODO: Change this when updating.
+	private String version = "1.5.3";
 	
 	@Override
 	public void onEnable()
@@ -680,7 +681,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		String inputLine;
 		while((inputLine = in.readLine()) != null)
 		{
-			if(inputLine.contains(this.getDescription().getVersion()))
+			if(inputLine.contains(version))
 			{
 				return false;
 			}
@@ -696,7 +697,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		String inputLine;
 		while((inputLine = in.readLine()) != null)
 		{
-			if(inputLine.contains(this.getDescription().getVersion()))
+			if(inputLine.contains(version))
 			{
 				return true;
 			}
