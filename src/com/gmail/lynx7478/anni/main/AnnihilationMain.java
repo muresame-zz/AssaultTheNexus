@@ -105,7 +105,6 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		} catch (IOException e1) 
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
-			e1.printStackTrace();
 			this.getPluginLoader().disablePlugin(this);
 			return;
 		}
@@ -114,7 +113,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			if(this.blacklistedVersion())
 			{
 				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-				Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly is this Annihilation version.");
+				Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Annihilation version.");
 				Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
 				Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKA4 immediately.)");
 				Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
@@ -124,7 +123,6 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		} catch (IOException e1) 
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
-			e1.printStackTrace();
 			this.getPluginLoader().disablePlugin(this);
 			return;
 		}
@@ -677,33 +675,30 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	private boolean needsUpdating() throws IOException
 	{
 		URL url = new URL("http://notska4.esy.es/anni/index.html");
-		 URLConnection yc = url.openConnection();
-	        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-	        {
-	            String inputLine;
-	                        while ((inputLine = in.readLine()) != null) {
-	                         System.out.println(inputLine);
-	                          if (inputLine.equalsIgnoreCase(version)){
-	                              return false;
-	                          }
-	                       }
-	                   }
-	        return true;
+		URLConnection con = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		while((inputLine = in.readLine()) != null)
+		{
+			if(inputLine.contains(this.getDescription().getVersion()))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	private boolean blacklistedVersion() throws IOException
 	{
 		URL url = new URL("http://notska4.esy.es/anni/blacklist/index.html");
-		URLConnection yc = url.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+		URLConnection con = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		while((inputLine = in.readLine()) != null)
 		{
-			String inputLine;
-			while((inputLine = in.readLine()) != null)
+			if(inputLine.contains(this.getDescription().getVersion()))
 			{
-				if(inputLine.equalsIgnoreCase(version))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 		return false;
