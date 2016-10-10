@@ -676,7 +676,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	
 	private boolean needsUpdating() throws IOException
 	{
-		URL url = new URL("http://37.139.12.5/anni/index.html");
+		URL url = new URL("http://notska4.esy.es/anni/index.html");
 		 URLConnection yc = url.openConnection();
 	        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 	        {
@@ -693,7 +693,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	
 	private boolean blacklistedVersion() throws IOException
 	{
-		URL url = new URL("http://37.139.12.5/blacklist/index.html");
+		URL url = new URL("http://notska4.esy.es/anni/blacklist/index.html");
 		URLConnection yc = url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 		{
