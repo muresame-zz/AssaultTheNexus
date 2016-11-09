@@ -61,6 +61,10 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	//public static boolean useProtocalHack = false;
 	//public static final String Name = "Annihilation";
 	
+	final String uid = "%%__USER__%%";
+	final String rid = "%%__RESOURCE__%%";
+	final String nonce = "%%__NONCE__%%";
+	
 	private static AnnihilationMain instance;
 	
 	private boolean hasEssentials;
