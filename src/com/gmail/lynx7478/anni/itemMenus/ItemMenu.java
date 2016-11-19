@@ -3,7 +3,6 @@ package com.gmail.lynx7478.anni.itemMenus;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -29,10 +28,16 @@ public class ItemMenu
 	 * slots if {@link com.gmail.lynx7478.anni.itemMenus.MenuItem#fillEmptySlots()} is
 	 * called.
 	 */
+	// This was used before 1.11, since the GRAY#getData() method was removed, and to adapt it I had to make a method.
+//	@SuppressWarnings("deprecation")
+//	private static final MenuItem EMPTY_SLOT_ITEM = new StaticMenuItem(" ",
+//			new ItemStack(Material.STAINED_GLASS_PANE, 1,
+//					DyeColor.GRAY.getData()));
+	
 	@SuppressWarnings("deprecation")
 	private static final MenuItem EMPTY_SLOT_ITEM = new StaticMenuItem(" ",
 			new ItemStack(Material.STAINED_GLASS_PANE, 1,
-					DyeColor.GRAY.getData()));
+					(byte) 7));
 
 	/**
 	 * Creates an {@link com.gmail.lynx7478.anni.itemMenus.MenuItem}.
