@@ -90,7 +90,7 @@ public class Nexus implements Listener
 							AnniEvent.callEvent(e);
 							if(!e.isCancelled() && e.getDamage() > 0)
 							{
-								if(!VersionUtils.getVersion().contains("v1_9")){
+								if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
 									loc.getWorld().playSound(loc, Sound.ANVIL_LAND, 1F, (float)Math.random());
 								}else{
 									try {
@@ -106,7 +106,7 @@ public class Nexus implements Listener
 								{
 									Player pl = player.getPlayer();
 									if(pl != null)
-										if(!VersionUtils.getVersion().contains("v1_9")){
+										if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
 											pl.playSound(pl.getLocation(), Sound.NOTE_PIANO, 1f, 2.1f);
 										}
 								}
@@ -143,7 +143,7 @@ public class Nexus implements Listener
 										ImageMessage message =  new ImageMessage(image, 10, ImageChar.MEDIUM_SHADE.getChar()).appendText(lore);
 										for(Player pl : Bukkit.getOnlinePlayers())
 										{
-											if(!VersionUtils.getVersion().contains("v1_9")){
+											if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
 												pl.getWorld().playSound(pl.getLocation(), Sound.EXPLODE, 1F, .8F);
 											}else{
 												Class<Enum> cls = (Class<Enum>) Class.forName("org.bukkit.Sound");
@@ -195,7 +195,7 @@ public class Nexus implements Listener
 				ImageMessage message =  new ImageMessage(image, 10, ImageChar.MEDIUM_SHADE.getChar()).appendText(lore);
 				for(Player pl : Bukkit.getOnlinePlayers())
 				{
-					if(!VersionUtils.getVersion().contains("v1_9")){
+					if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
 						pl.getWorld().playSound(pl.getLocation(), Sound.EXPLODE, 1F, .8F);
 					}else{
 						Class<Enum> cls = (Class<Enum>) Class.forName("org.bukkit.Sound");

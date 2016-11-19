@@ -216,7 +216,7 @@ public final class RegeneratingBlocks implements Listener
 						if(!e.isCancelled())
 						{
 							if(e.getXP() > 0)
-								if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_10")){
+								if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_10") && !VersionUtils.getVersion().contains("v1_11")){
 									p.playSound(p.getLocation(), Sound.ORB_PICKUP, 0.6F, rand.nextFloat());
 								}else{
 									try {
@@ -287,7 +287,7 @@ public final class RegeneratingBlocks implements Listener
 						if(!e.isCancelled())
 						{
 							if(e.getXP() > 0)
-								if(!VersionUtils.getVersion().contains("v1_9")){
+								if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
 									p.playSound(p.getLocation(), Sound.ORB_PICKUP, 0.6F, rand.nextFloat());
 								}else{
 									try {
