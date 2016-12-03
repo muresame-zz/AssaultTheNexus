@@ -23,13 +23,10 @@ import com.gmail.lynx7478.anni.main.Lang;
 public class InvisibilityListeners implements Listener
 {
 	
-	private ArrayList<AnniPlayer> invis;
-	
 	public InvisibilityListeners(Plugin plugin)
 	{
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 //		AnniEvent.registerListener(this);
-		this.invis = new ArrayList<AnniPlayer>();
     }
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -90,8 +87,9 @@ public class InvisibilityListeners implements Listener
 			player.sendMessage(Lang.INVISREVEAL.toString());
 		}
 	}
-	
-	@EventHandler
+
+	//TODO: Screw this.
+/**	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e)
 	{
 		Player bP = e.getPlayer();
@@ -114,5 +112,5 @@ public class InvisibilityListeners implements Listener
 				aP.showPlayer(bP);
 			}
 		}
-	}
+	} **/
 }

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -92,6 +93,16 @@ public final class AnniTeam
 		scoreboardTeam.setAllowFriendlyFire(false);
 		scoreboardTeam.setCanSeeFriendlyInvisibles(true);
 		scoreboardTeam.setPrefix(this.getColor().toString());
+		if(GameVars.getHideTags())
+		{
+			if(VersionUtils.getVersion().contains("1_8") || VersionUtils.getVersion().contains("1_9") || VersionUtils.getVersion().contains("1_10") || VersionUtils.getVersion().contains("1_11"))
+			{
+				scoreboardTeam.setNameTagVisibility(NameTagVisibility.HIDE_FOR_OTHER_TEAMS);
+			}else
+			{
+				AnnihilationMain.getInstance().getLogger().log(Level.SEVERE, "WARNING!!! You were trying to hide other teams' tags, which is only supported for version 1.8 and above. Tags will not be hidden.");
+			}
+		}
 	}
 	
 	public ChatColor getColor()
