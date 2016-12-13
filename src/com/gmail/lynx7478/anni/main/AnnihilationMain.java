@@ -60,7 +60,10 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 { 
 	//public static boolean useProtocalHack = false;
 	//public static final String Name = "Annihilation";
-	
+
+	private static boolean blacklisted;
+	private static boolean update;
+
 	final String uid = "%%__USER__%%";
 	final String rid = "%%__RESOURCE__%%";
 	final String nonce = "%%__NONCE__%%";
@@ -95,41 +98,29 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	public void onEnable()
 	{
 		instance = this;
-		try {
-			if(this.needsUpdating())
-			{
-				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-				Bukkit.getLogger().log(Level.SEVERE, "Annihilation is out of date.");
-				Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
-				Bukkit.getLogger().log(Level.SEVERE, "from Spigot.");
-				Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
-				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-				this.getPluginLoader().disablePlugin(this);
-				return;
-			}
-		} catch (IOException e1) 
+		checkBlacklist();
+		checkUpdate();
+		if(update)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
+			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
+			Bukkit.getLogger().log(Level.SEVERE, "Annihilation is out of date.");
+			Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
+			Bukkit.getLogger().log(Level.SEVERE, "from Spigot.");
+			Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
+			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 			this.getPluginLoader().disablePlugin(this);
 			return;
 		}
-		
-		try {
-			if(this.blacklistedVersion())
-			{
-				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-				Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Annihilation version.");
-				Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
-				Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKA4 immediately.)");
-				Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
-				Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-				this.getPluginLoader().disablePlugin(this);
-			}
-		} catch (IOException e1) 
+
+		if(blacklisted)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "[Annihilation] There was an error contacting the remote server for Anti-Piracy. Please contact SKA4 for more info and help.");
+			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
+			Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Annihilation version.");
+			Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
+			Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKA4 immediately.)");
+			Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
+			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 			this.getPluginLoader().disablePlugin(this);
-			return;
 		}
 		loadLang();
 		new InvisibilityListeners(this);
@@ -677,36 +668,65 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		}
 	}
 	
-	private boolean needsUpdating() throws IOException
+	private void checkUpdate()
 	{
-		URL url = new URL("http://notska4.esy.es/anni/index.html");
-		URLConnection con = url.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		while((inputLine = in.readLine()) != null)
-		{
-			if(inputLine.contains(version))
+		this.getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
+			public void run()
 			{
-				return false;
+				try
+				{
+					URL url = new URL("http://notska4.esy.es/anni/index.html");
+					URLConnection con = url.openConnection();
+					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+					String inputLine;
+					while((inputLine = in.readLine()) != null)
+					{
+						if(inputLine.contains(version))
+						{
+							AnnihilationMain.update = true;
+						}else
+						{
+							AnnihilationMain.update = false;
+						}
+					}
+					return;
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
-		}
-		return true;
+		});
 	}
 	
-	private boolean blacklistedVersion() throws IOException
+	private void checkBlacklist()
 	{
-		URL url = new URL("http://notska4.esy.es/anni/blacklist/index.html");
-		URLConnection con = url.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		while((inputLine = in.readLine()) != null)
+		this.getServer().getScheduler().runTaskAsynchronously(this, new Runnable()
 		{
-			if(inputLine.contains(version))
+			public void run()
 			{
-				return true;
+				try
+				{
+					URL url = new URL("http://notska4.esy.es/anni/blacklist/index.html");
+					URLConnection con = url.openConnection();
+					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+					String inputLine;
+					while((inputLine = in.readLine()) != null)
+					{
+						if(inputLine.contains(version))
+						{
+							AnnihilationMain.blacklisted = true;
+						}else
+						{
+							AnnihilationMain.blacklisted = false;
+						}
+					}
+					return;
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
-		}
-		return false;
+		});
 	}
 	
 	public boolean hasEssentials()
