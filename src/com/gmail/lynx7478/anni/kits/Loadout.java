@@ -233,4 +233,9 @@ public class Loadout
 		}
 			return this;
 	}
+	
+	public ItemStack[] getFinalStacks()
+	{
+		return finalStacks;
+	}
 }
