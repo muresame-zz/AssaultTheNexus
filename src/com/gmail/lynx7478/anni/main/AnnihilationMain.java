@@ -92,7 +92,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	}
 	
 	//TODO: Change this when updating.
-	private String version = "1.5.5";
+	private String version = "1.5.6";
 	
 	@Override
 	public void onEnable()
@@ -117,7 +117,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 			Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Annihilation version.");
 			Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
-			Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKA4 immediately.)");
+			Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKAIV immediately.)");
 			Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 			this.getPluginLoader().disablePlugin(this);
