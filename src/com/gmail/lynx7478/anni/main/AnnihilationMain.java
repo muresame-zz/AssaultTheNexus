@@ -63,10 +63,6 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 
 	private static boolean blacklisted;
 	private static boolean update;
-
-	final String uid = "%%__USER__%%";
-	final String rid = "%%__RESOURCE__%%";
-	final String nonce = "%%__NONCE__%%";
 	
 	private static AnnihilationMain instance;
 	
