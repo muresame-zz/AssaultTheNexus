@@ -103,13 +103,10 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		if(update)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			Bukkit.getLogger().log(Level.SEVERE, "Annihilation is out of date.");
-			Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
-			Bukkit.getLogger().log(Level.SEVERE, "from Spigot.");
-			Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
+			Bukkit.getLogger().log(Level.SEVERE, "There is an update available for Annihilation.");
+			Bukkit.getLogger().log(Level.SEVERE, "It is recommended that you download");
+			Bukkit.getLogger().log(Level.SEVERE, "the latest version from Spigot.");
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			this.getPluginLoader().disablePlugin(this);
-			return;
 		}
 
 		if(blacklisted)
@@ -121,6 +118,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 			this.getPluginLoader().disablePlugin(this);
+			return;
 		}
 		loadLang();
 		new InvisibilityListeners(this);
