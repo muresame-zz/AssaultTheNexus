@@ -303,8 +303,8 @@ public final class GameMap extends AnniMap implements Listener
 						try {
 							this.boss2Type = (Class<? extends Entity>) Class.forName("org.bukkit.entity."+boss2.getString("Type"));
 						} catch (ClassNotFoundException e) {
-							System.err.println("[Annihialtion] ERROR LOADING BOSSES!!");
-							System.err.println("[Annihialtion] GAME WILL FREEZE AT PHASE 4!!");
+							System.err.println("[Annihilation] ERROR LOADING BOSSES!!");
+							System.err.println("[Annihilation] GAME WILL FREEZE AT PHASE 4!!");
 						}
 					}else
 					{
