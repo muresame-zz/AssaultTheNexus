@@ -324,11 +324,11 @@ public class GameListeners implements Listener
 		{
 			return;
 		}
-		if(e.getEntity().getKiller() != null)
+		if(e.getEntity().getKiller() == null)
 		{
 			return;
 		}
-		if(e.getEntity() != Game.getGameMap().getBoss1() || e.getEntity() != Game.getGameMap().getBoss2())
+		if(!e.getEntity().hasMetadata("Boss"))
 		{
 			return;
 		}
