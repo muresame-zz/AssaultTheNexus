@@ -10,14 +10,17 @@ import javax.imageio.ImageIO;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -44,6 +47,8 @@ import com.gmail.lynx7478.anni.utils.VersionUtils;
 public class GameListeners implements Listener
 {
 	
+	private ArrayList<BrewingStand> brewingStands;
+	
 	private ArrayList<String> offlinePlayers;
 	
 	public GameListeners(Plugin p)
@@ -55,6 +60,7 @@ public class GameListeners implements Listener
 		if(version.contains("v1_8") || version.contains("v1_9"))
 			new ArmorStandListener(p);
 		offlinePlayers = new ArrayList<String>();
+		brewingStands = new ArrayList<BrewingStand>();
 	}
 
 	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
@@ -316,7 +322,6 @@ public class GameListeners implements Listener
 		this.offlinePlayers.add(p.getName());
 	}
 	
-	//TODO: Fix this.
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent e)
 	{
@@ -355,6 +360,47 @@ public class GameListeners implements Listener
 					ex.printStackTrace();
 				}
       	 }
+	}
+	
+	@EventHandler
+	public void onBrewingStandPlace(BlockPlaceEvent e)
+	{
+		if(e.getBlock().getType() != Material.BREWING_STAND)
+		{
+			return;
+		}
+		
+		AnniPlayer p = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
+		this.brewingStands.add(new BrewingStand(e.getBlock().getLocation(), p));
+	}
+	
+	@EventHandler
+	public void onBrewingStandInteract(PlayerInteractEvent e)
+	{
+		if(e.getClickedBlock() == null || e.getClickedBlock().getType() == Material.AIR)
+		{
+			return;
+		}
+		
+		if(e.getClickedBlock().getType() == Material.BREWING_STAND)
+		{
+			AnniPlayer p = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
+			
+			boolean cancel = true;
+			for(BrewingStand bs : brewingStands)
+			{
+				if(bs.getOwner().equals(p))
+				{
+					cancel = false;
+					break;
+				}
+			}
+			e.setCancelled(cancel);
+			if(cancel)
+			{
+				// Language message.
+			}
+		}
 	}
 	
 	private ItemStack getReward()
