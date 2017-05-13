@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -365,6 +367,11 @@ public class GameListeners implements Listener
 	@EventHandler
 	public void onBrewingStandPlace(BlockPlaceEvent e)
 	{
+		if(!GameVars.usePrivateBrewingStands())
+		{
+			return;
+		}
+		
 		if(e.getBlock().getType() != Material.BREWING_STAND)
 		{
 			return;
@@ -372,12 +379,24 @@ public class GameListeners implements Listener
 		
 		AnniPlayer p = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
 		this.brewingStands.add(new BrewingStand(e.getBlock().getLocation(), p));
+		p.getPlayer().sendMessage(Lang.BREWING_PLACE.toString());
+		
 	}
 	
 	@EventHandler
 	public void onBrewingStandInteract(PlayerInteractEvent e)
 	{
+		if(!GameVars.usePrivateBrewingStands())
+		{
+			return;
+		}
+		
 		if(e.getClickedBlock() == null || e.getClickedBlock().getType() == Material.AIR)
+		{
+			return;
+		}
+		
+		if(e.getAction() != Action.RIGHT_CLICK_BLOCK)
 		{
 			return;
 		}
@@ -398,7 +417,48 @@ public class GameListeners implements Listener
 			e.setCancelled(cancel);
 			if(cancel)
 			{
-				// Language message.
+				p.getPlayer().sendMessage(Lang.BREWING_OPEN_FAIL.toString());
+			}else
+			{
+				p.getPlayer().sendMessage(Lang.BREWING_OPEN.toString());
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onBrewingStandBreak(BlockBreakEvent e)
+	{
+		if(!GameVars.usePrivateBrewingStands())
+		{
+			return;
+		}
+		
+		if(e.getBlock().getType() == null || e.getBlock().getType() == Material.AIR)
+		{
+			return;
+		}
+		
+		if(e.getBlock().getType() == Material.BREWING_STAND)
+		{
+			AnniPlayer p = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
+			
+			boolean cancel = true;
+			for(BrewingStand bs : brewingStands)
+			{
+				if(bs.getOwner().equals(p))
+				{
+					cancel = false;
+					break;
+				}
+			}
+			e.setCancelled(cancel);
+			if(cancel)
+			{
+				p.getPlayer().sendMessage(Lang.BREWING_BREAK_FAIL.toString());
+			}else
+			{
+				this.brewingStands.remove(p);
+				p.getPlayer().sendMessage(Lang.BREWING_BREAK.toString());
 			}
 		}
 	}

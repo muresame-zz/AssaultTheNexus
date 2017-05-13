@@ -36,6 +36,9 @@ public class GameVars
 	
 	private static boolean hideTags = true;
 	
+	// Private brewing stands.
+	private static boolean privateBrewingStands = true;
+	
 	// For 1.8 adventure fix.
 	private static boolean useSpecificBreaking = true;
 	
@@ -195,6 +198,11 @@ public class GameVars
 		return usePEX;
 	}
 	
+	public static boolean usePrivateBrewingStands()
+	{
+		return privateBrewingStands;
+	}
+	
 	public static void loadGameVars(ConfigurationSection config)
 	{
 		if(config != null)
@@ -247,6 +255,8 @@ public class GameVars
 				revealOnDamage = invis.getBoolean("Reveal-On-Damage");
 				
 				useCivilianKit = gameVars.getBoolean("Use-Civilian-Kit");
+				
+				privateBrewingStands = gameVars.getBoolean("Use-Private-Brewing-Stands");
 				
 			
 				String gamemode = gameVars.getString("DefaultGameMode");

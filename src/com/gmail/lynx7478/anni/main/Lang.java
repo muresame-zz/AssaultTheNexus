@@ -119,8 +119,14 @@ public enum Lang
 	REMOVED_TEAM("removed-from-team",ChatColor.GREEN+"Successfully removed "+ChatColor.AQUA+"%PLAYER%"+ChatColor.GREEN+" from team "+"%TEAM%"+ChatColor.GREEN+"!"),
 	NO_TEAM("no-team", ChatColor.RED + "%PLAYER%" + " does not have a team."),
 	INVALID_PLAYER("invalid-player",ChatColor.RED+"%PLAYER%"+" is not a valid player or is not online."),
-	CHANGETEAM_USAGE("change-team-usage", ChatColor.RED+"Usage: /changeteam <Player> <Team>");
+	CHANGETEAM_USAGE("change-team-usage", ChatColor.RED+"Usage: /changeteam <Player> <Team>"),
 
+	// Brewing Stands
+	BREWING_BREAK_FAIL("brewing-stand-break-fail", ChatColor.RED + "You cannot break this brewing stand!"),
+	BREWING_PLACE("brewing-stand-place", ChatColor.GREEN + "Successfully placed your private brewing stand!"),
+	BREWING_OPEN_FAIL("brewing-stand-open-fail", ChatColor.RED + "You cannot open this brewing stand!"),
+	BREWING_BREAK("brewing-stand-break", ChatColor.GREEN + "You successfully broke your private brewing stand!"),
+	BREWING_OPEN("brewing-stand-open", ChatColor.RED + "You cannot open this brewing stand!");
 	//TEST("","");
  
     private String path;

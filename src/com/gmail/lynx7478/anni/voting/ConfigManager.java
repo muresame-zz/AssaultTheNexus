@@ -77,6 +77,8 @@ public class ConfigManager
             save+= setDefaultIfNotSet(gameVars, "Invisibles.Reveal-On-Damage", true);
             
             save += setDefaultIfNotSet(gameVars, "Use-Civilian-Kit", true);
+            
+            save += setDefaultIfNotSet(gameVars, "Use-Private-Brewing-Stands", true);
             // save+= setDefaultIfNotSet(gameVars, "Use-Civilian-Kit", true);
 			
 //			if(!mainConfig.isConfigurationSection("XP-System"))
