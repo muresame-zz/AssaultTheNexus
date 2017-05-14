@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -386,6 +387,9 @@ public class GameListeners implements Listener
 	@EventHandler
 	public void onBrewingStandInteract(PlayerInteractEvent e)
 	{
+		
+		if(e.getPlayer().getGameMode() == GameMode.CREATIVE && e.getPlayer().hasPermission("Anni.OpenBrewingStands") && e.getPlayer().isOp())
+		
 		if(!GameVars.usePrivateBrewingStands())
 		{
 			return;
