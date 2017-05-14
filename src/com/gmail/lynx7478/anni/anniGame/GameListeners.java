@@ -418,9 +418,6 @@ public class GameListeners implements Listener
 			if(cancel)
 			{
 				p.getPlayer().sendMessage(Lang.BREWING_OPEN_FAIL.toString());
-			}else
-			{
-				p.getPlayer().sendMessage(Lang.BREWING_OPEN.toString());
 			}
 		}
 	}
