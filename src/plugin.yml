@@ -44,3 +44,5 @@ permissions:
     default: false
   Anni.ChatSpy:
     default: op
+  Anni.OpenBrewingStands:
+    default: op
