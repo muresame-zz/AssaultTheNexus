@@ -1,17 +1,18 @@
-name: Annihilation
+name: DestroyTheNexus
 main: com.gmail.lynx7478.anni.main.AnnihilationMain
-version: 1.5.8
+version: 1.5.9
 authors: [Mr_Little_Kitty, SKAIV]
-description: Annihilation minigame plugin.
+description: Destroy the Nexus minigame plugin.
 commands:
   Anni:
-    description: provides commands for the Annihilation game
+    description: provides commands for the Destroy the Nexus game.
+    aliases: [dtn, destroythenexus]
   Team:
-    description: Command related to annihilation team
+    description: Command related to destroy the nexus' team.
   Area:
-    description: Command for managing annihilation areas
+    description: Command for managing destroy the nexus areas.
   Vote:
-    description: Allows players to vote for a map in annihilation
+    description: Allows players to vote for a map in destroy the nexus.
   Kit:
     description: Opens the kit menu for the player
   enderchest:

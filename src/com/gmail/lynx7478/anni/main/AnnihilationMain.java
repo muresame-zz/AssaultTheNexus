@@ -88,7 +88,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	}
 	
 	//TODO: Change this when updating.
-	private String version = "1.5.8";
+	private String version = "1.5.9";
 	
 	@Override
 	public void onEnable()
@@ -99,7 +99,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		if(update)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			Bukkit.getLogger().log(Level.SEVERE, "There is an update available for Annihilation.");
+			Bukkit.getLogger().log(Level.SEVERE, "There is an update available for Destroy the Nexus.");
 			Bukkit.getLogger().log(Level.SEVERE, "It is recommended that you download");
 			Bukkit.getLogger().log(Level.SEVERE, "the latest version from Spigot.");
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
@@ -108,10 +108,10 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		if(blacklisted)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Annihilation version.");
+			Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Destroy the Nexus version.");
 			Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
 			Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKAIV immediately.)");
-			Bukkit.getLogger().log(Level.SEVERE, "Annihilation will now auto-disable itself.");
+			Bukkit.getLogger().log(Level.SEVERE, "Destroy the Nexus will now auto-disable itself.");
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
 			this.getPluginLoader().disablePlugin(this);
 			return;
