@@ -236,8 +236,8 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			catch (IOException e)
 			{
 				e.printStackTrace(); // So they notice
-				Bukkit.getLogger().severe("[Annihilation] Couldn't create language file.");
-				Bukkit.getLogger().severe("[Annihilation] This is a fatal error. Now disabling");
+				Bukkit.getLogger().severe("[DestroyTheNexus] Couldn't create language file.");
+				Bukkit.getLogger().severe("[DestroyTheNexus] This is a fatal error. Now disabling");
 				this.setEnabled(false); // Without it loaded, we can't send them messages
 			}
 		}
