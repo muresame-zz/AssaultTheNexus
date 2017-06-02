@@ -99,7 +99,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		if(update)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			Bukkit.getLogger().log(Level.SEVERE, "There is an update available for Destroy the Nexus.");
+			Bukkit.getLogger().log(Level.SEVERE, "There is an update available for Assault the Nexus.");
 			Bukkit.getLogger().log(Level.SEVERE, "It is recommended that you download");
 			Bukkit.getLogger().log(Level.SEVERE, "the latest version from Spigot.");
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
@@ -108,7 +108,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		if(blacklisted)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Destroy the Nexus version.");
+			Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Assault the Nexus version.");
 			Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
 			Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKAIV immediately.)");
 			Bukkit.getLogger().log(Level.SEVERE, "Destroy the Nexus will now auto-disable itself.");
@@ -236,8 +236,8 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			catch (IOException e)
 			{
 				e.printStackTrace(); // So they notice
-				Bukkit.getLogger().severe("[DestroyTheNexus] Couldn't create language file.");
-				Bukkit.getLogger().severe("[DestroyTheNexus] This is a fatal error. Now disabling");
+				Bukkit.getLogger().severe("[AssaultTheNexus] Couldn't create language file.");
+				Bukkit.getLogger().severe("[AssaultTheNexus] This is a fatal error. Now disabling");
 				this.setEnabled(false); // Without it loaded, we can't send them messages
 			}
 		}
@@ -277,7 +277,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			@Override
 			public String getHelp() 
 			{
-				return ChatColor.LIGHT_PURPLE+"Start--"+ChatColor.GREEN+"Starts a game of Annihilation.";
+				return ChatColor.LIGHT_PURPLE+"Start--"+ChatColor.GREEN+"Starts a game of Assault the Nexus.";
 			}
 
 			@Override

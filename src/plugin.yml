@@ -1,18 +1,18 @@
-name: DestroyTheNexus
+name: AssaultTheNexus
 main: com.gmail.lynx7478.anni.main.AnnihilationMain
 version: 1.5.9
 authors: [Mr_Little_Kitty, SKAIV]
-description: Destroy the Nexus minigame plugin.
+description: Assault the Nexus minigame plugin.
 commands:
   Anni:
-    description: provides commands for the Destroy the Nexus game.
-    aliases: [dtn, destroythenexus]
+    description: provides commands for the Assault the Nexus game.
+    aliases: [atn, assaultthenexus]
   Team:
-    description: Command related to destroy the nexus' team.
+    description: Command related to assault the nexus' teams.
   Area:
-    description: Command for managing destroy the nexus areas.
+    description: Command for managing assault the nexus areas.
   Vote:
-    description: Allows players to vote for a map in destroy the nexus.
+    description: Allows players to vote for a map in assault the nexus.
   Kit:
     description: Opens the kit menu for the player
   enderchest:
