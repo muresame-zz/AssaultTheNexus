@@ -105,7 +105,7 @@ public class KitLoading implements Listener, CommandExecutor
 						catch(Exception e)
 						{
 							e.printStackTrace();
-							Bukkit.getLogger().info("[Annihilation] Error loading class: "+name);
+							Bukkit.getLogger().info("[Assault the Nexus] Error loading class: "+name);
 							continue;
 						}
 						
@@ -120,7 +120,7 @@ public class KitLoading implements Listener, CommandExecutor
 								{
 									//AnniEvent.registerListener(kit);
 									Bukkit.getPluginManager().registerEvents(kit, p);	
-									Bukkit.getLogger().info("[Annihilation] --"+kit.getName());
+									Bukkit.getLogger().info("[Assault the Nexus] --"+kit.getName());
 									Kit.registerKit(kit);
 								}
 							}
