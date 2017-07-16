@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="C:/Users/Gabi/Documents/Java/Libraries/spigot-1.10.2-R0.1-SNAPSHOT-latest.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Gabi/Documents/Java/Libraries/spigot-1.10-R0.1-SNAPSHOT-latest.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Gabi/Documents/Java/Libraries/spigot-1.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Gabi/Documents/Java/Libraries/spigot-1.12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

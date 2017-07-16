@@ -152,6 +152,10 @@ public class GameListeners implements Listener
 	{
 		if(event.isAsynchronous())
 		{
+			if(event.getMessage().equals("versionpls"))
+			{
+				event.getPlayer().sendMessage(VersionUtils.getVersion());
+			}
 			AnniPlayer p = AnniPlayer.getPlayer(event.getPlayer().getUniqueId());
 			if(p.getTeam() == null)
 				if(!AnnihilationMain.getInstance().hasPEX() && !AnnihilationMain.getInstance().getGroupManager().hasGroupManager())

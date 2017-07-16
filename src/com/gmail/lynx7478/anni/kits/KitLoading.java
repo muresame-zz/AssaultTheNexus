@@ -332,7 +332,7 @@ public class KitLoading implements Listener, CommandExecutor
 		    {
 			    if(KitUtils.isSoulbound(stack))
 			    {
-				    if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
+				    if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_12")){
 				    	player.playSound(player.getLocation(), Sound.BLAZE_HIT, 1.0F, 0.3F);
 				    }else{
 						try {
