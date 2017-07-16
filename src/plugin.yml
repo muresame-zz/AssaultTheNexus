@@ -1,7 +1,7 @@
 name: AssaultTheNexus
 main: com.gmail.lynx7478.anni.main.AnnihilationMain
 version: 1.6.0
-authors: [Mr_Little_Kitty, SKAIV]
+authors: [Mr_Little_Kitty, muresame]
 description: Assault the Nexus minigame plugin.
 commands:
   Anni:
