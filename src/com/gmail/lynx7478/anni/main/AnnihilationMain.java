@@ -88,7 +88,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	}
 	
 	//TODO: Change this when updating.
-	private String version = "1.5.9";
+	private String version = "1.6.0";
 	
 	@Override
 	public void onEnable()
