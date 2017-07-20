@@ -421,7 +421,7 @@ public class GameListeners implements Listener
 			{
 				if(b.getLocation().equals(e.getClickedBlock().getLocation()))
 				{
-					if(!b.getOwner().getID().equals(p.getID()))
+					if(!b.getOwner().equals(p) && b.getOwner().getTeam() == p.getTeam())
 					{
 						e.setCancelled(true);
 						p.getPlayer().sendMessage(Lang.BREWING_OPEN_FAIL.toString());
@@ -462,7 +462,7 @@ public class GameListeners implements Listener
 			{
 				if(b.getLocation().equals(e.getBlock().getLocation()))
 				{
-					if(b.getOwner().getID() != aP.getID())
+					if(!b.getOwner().equals(aP) && b.getOwner().getTeam() == aP.getTeam())
 					{
 						e.setCancelled(true);
 						aP.getPlayer().sendMessage(Lang.BREWING_BREAK_FAIL.toString());
