@@ -20,17 +20,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import ru.tehkode.permissions.bukkit.PermissionsEx;
@@ -55,6 +58,8 @@ public class GameListeners implements Listener
 	
 	private ArrayList<String> offlinePlayers;
 	
+	private HashMap<AnniPlayer, AnniTeam> invis;
+	
 	public GameListeners(Plugin p)
 	{
         Bukkit.getPluginManager().registerEvents(this, p);
@@ -65,6 +70,7 @@ public class GameListeners implements Listener
 			new ArmorStandListener(p);
 		offlinePlayers = new ArrayList<String>();
 		brewingStands = new ArrayList<BrewingStand>();
+		invis = new HashMap<AnniPlayer, AnniTeam>();
 	}
 
 	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
@@ -476,6 +482,49 @@ public class GameListeners implements Listener
 				}
 			}
 			return;
+		}
+	}
+	
+	@EventHandler
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent e)
+	{
+		if(!(e.getDamager() instanceof Player) || !(e.getEntity() instanceof Player))
+		{
+			AnniPlayer damager = AnniPlayer.getPlayer(e.getDamager().getUniqueId());
+			AnniPlayer p = AnniPlayer.getPlayer(e.getEntity().getUniqueId());
+			if(!invis.containsKey(p))
+			{
+				return;
+			}
+			if(invis.get(p).equals(damager.getTeam()))
+			{
+				e.setCancelled(true);
+				return;
+			}
+		}
+	}
+	
+	// Invis.
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent e)
+	{
+		AnniPlayer p = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
+		if(p.getTeam() != null)
+		{
+			if(p.getPlayer().hasPotionEffect(PotionEffectType.INVISIBILITY))
+			{
+				p.getPlayer().setPlayerListName(p.getTeam().getColor()+p.getName());
+				invis.put(p, p.getTeam());
+				p.getTeam().leaveTeam(p);
+				return;
+			}
+			
+			if(invis.containsKey(p))
+			{
+				invis.get(p).joinTeam(p);
+				invis.remove(p);
+				return;
+			}
 		}
 	}
 	
