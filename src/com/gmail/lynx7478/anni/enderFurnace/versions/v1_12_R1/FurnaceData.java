@@ -10,7 +10,7 @@ class FurnaceData extends com.gmail.lynx7478.anni.enderFurnace.api.FurnaceData
     public FurnaceData(TileEntityFurnace furnace)
     {
         super(asBukkitCopy(getStacksAsCollection()),furnace.getProperty(0),furnace.getProperty(1),furnace.getProperty(2));
-        furnace = furnace;
+        FurnaceData.furnace = furnace;
     }
 
     private static org.bukkit.inventory.ItemStack[] asBukkitCopy(net.minecraft.server.v1_12_R1.ItemStack[] stacks)
