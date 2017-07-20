@@ -3,6 +3,7 @@ package com.gmail.lynx7478.anni.anniGame;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -60,7 +61,7 @@ public class GameListeners implements Listener
         RespawnHandler.register(p);
 
 		String version = VersionUtils.getVersion();
-		if(version.contains("v1_8") || version.contains("v1_9"))
+		if(version.contains("v1_8") || version.contains("v1_9") || version.contains("v1_10") || version.contains("v1_11") || version.contains("v1_12"))
 			new ArmorStandListener(p);
 		offlinePlayers = new ArrayList<String>();
 		brewingStands = new ArrayList<BrewingStand>();
@@ -392,7 +393,10 @@ public class GameListeners implements Listener
 	public void onBrewingStandInteract(PlayerInteractEvent e)
 	{
 		
-		if(e.getPlayer().getGameMode() == GameMode.CREATIVE && e.getPlayer().hasPermission("Anni.OpenBrewingStands") && e.getPlayer().isOp())
+		if(e.getPlayer().getGameMode() == GameMode.CREATIVE || e.getPlayer().hasPermission("Anni.OpenBrewingStands") || e.getPlayer().isOp())
+		{
+			return;
+		}
 		
 		if(!GameVars.usePrivateBrewingStands())
 		{
@@ -413,20 +417,22 @@ public class GameListeners implements Listener
 		{
 			AnniPlayer p = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
 			
-			boolean cancel = true;
-			for(BrewingStand bs : brewingStands)
+			for(BrewingStand b : brewingStands)
 			{
-				if(bs.getOwner().equals(p))
+				if(b.getLocation().equals(e.getClickedBlock().getLocation()))
 				{
-					cancel = false;
-					break;
+					if(!b.getOwner().getID().equals(p.getID()))
+					{
+						e.setCancelled(true);
+						p.getPlayer().sendMessage(Lang.BREWING_OPEN_FAIL.toString());
+						break;
+					}else
+					{
+						break;
+					}
 				}
 			}
-			e.setCancelled(cancel);
-			if(cancel)
-			{
-				p.getPlayer().sendMessage(Lang.BREWING_OPEN_FAIL.toString());
-			}
+			return;
 		}
 	}
 	
@@ -438,6 +444,11 @@ public class GameListeners implements Listener
 			return;
 		}
 		
+		if(e.getPlayer().getGameMode() == GameMode.CREATIVE || e.getPlayer().hasPermission("Anni.OpenBrewingStands") || e.getPlayer().isOp())
+		{
+			return;
+		}
+		
 		if(e.getBlock().getType() == null || e.getBlock().getType() == Material.AIR)
 		{
 			return;
@@ -445,26 +456,26 @@ public class GameListeners implements Listener
 		
 		if(e.getBlock().getType() == Material.BREWING_STAND)
 		{
-			AnniPlayer p = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
+			AnniPlayer aP = AnniPlayer.getPlayer(e.getPlayer().getUniqueId());
 			
-			boolean cancel = true;
-			for(BrewingStand bs : brewingStands)
+			for(BrewingStand b : brewingStands)
 			{
-				if(bs.getOwner().equals(p))
+				if(b.getLocation().equals(e.getBlock().getLocation()))
 				{
-					cancel = false;
-					break;
+					if(b.getOwner().getID() != aP.getID())
+					{
+						e.setCancelled(true);
+						aP.getPlayer().sendMessage(Lang.BREWING_BREAK_FAIL.toString());
+						break;
+					}else
+					{
+						brewingStands.remove(b);
+						aP.getPlayer().sendMessage(Lang.BREWING_BREAK.toString());
+						break;
+					}
 				}
 			}
-			e.setCancelled(cancel);
-			if(cancel)
-			{
-				p.getPlayer().sendMessage(Lang.BREWING_BREAK_FAIL.toString());
-			}else
-			{
-				this.brewingStands.remove(p);
-				p.getPlayer().sendMessage(Lang.BREWING_BREAK.toString());
-			}
+			return;
 		}
 	}
 	
