@@ -61,7 +61,6 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 	//public static boolean useProtocalHack = false;
 	//public static final String Name = "Annihilation";
 
-	private static boolean blacklisted;
 	private static boolean update;
 	
 	private static AnnihilationMain instance;
@@ -87,14 +86,10 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		return gMH;
 	}
 	
-	//TODO: Change this when updating.
-	private String version = "1.6.1";
-	
 	@Override
 	public void onEnable()
 	{
 		instance = this;
-		checkBlacklist();
 		checkUpdate();
 		if(update)
 		{
@@ -103,18 +98,6 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			Bukkit.getLogger().log(Level.SEVERE, "It is recommended that you download");
 			Bukkit.getLogger().log(Level.SEVERE, "the latest version from Spigot.");
 			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-		}
-
-		if(blacklisted)
-		{
-			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			Bukkit.getLogger().log(Level.SEVERE, "We have found an anomaly in this Assault the Nexus version.");
-			Bukkit.getLogger().log(Level.SEVERE, "Please download the latest version");
-			Bukkit.getLogger().log(Level.SEVERE, "from Spigot. (If there is one, if not contact SKAIV immediately.)");
-			Bukkit.getLogger().log(Level.SEVERE, "Destroy the Nexus will now auto-disable itself.");
-			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			this.getPluginLoader().disablePlugin(this);
-			return;
 		}
 		loadLang();
 		new InvisibilityListeners(this);
@@ -669,49 +652,18 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			{
 				try
 				{
-					URL url = new URL("http://notska4.esy.es/anni/index.html");
+					URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=19086");
 					URLConnection con = url.openConnection();
 					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 					String inputLine;
 					while((inputLine = in.readLine()) != null)
 					{
-						if(inputLine.contains(version))
+						if(!inputLine.contains(AnnihilationMain.getInstance().getDescription().getVersion()))
 						{
 							AnnihilationMain.update = true;
 						}else
 						{
 							AnnihilationMain.update = false;
-						}
-					}
-					return;
-				}catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	private void checkBlacklist()
-	{
-		this.getServer().getScheduler().runTaskAsynchronously(this, new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					URL url = new URL("http://notska4.esy.es/anni/blacklist/index.html");
-					URLConnection con = url.openConnection();
-					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-					String inputLine;
-					while((inputLine = in.readLine()) != null)
-					{
-						if(inputLine.contains(version))
-						{
-							AnnihilationMain.blacklisted = true;
-						}else
-						{
-							AnnihilationMain.blacklisted = false;
 						}
 					}
 					return;
