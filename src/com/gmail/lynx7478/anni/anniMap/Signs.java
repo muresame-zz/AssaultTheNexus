@@ -104,7 +104,6 @@ public final class Signs implements Iterable<AnniSign>, Listener
 		Block block = loc.getWorld().getBlockAt(loc);//asign.getLocation().toLocation().getBlock();
 		if(block.getType() != Material.WALL_SIGN && block.getType() != Material.SIGN_POST)
 			block.getWorld().getBlockAt(loc).setType(asign.isSignPost() ? Material.SIGN_POST : Material.WALL_SIGN);
-		
 		Sign sign = (Sign)block.getState();
 		if(sign != null)
 		{
