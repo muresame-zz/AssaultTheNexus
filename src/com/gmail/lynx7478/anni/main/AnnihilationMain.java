@@ -93,11 +93,11 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		checkUpdate();
 		if(update)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
-			Bukkit.getLogger().log(Level.SEVERE, "There is an update available for Assault the Nexus.");
-			Bukkit.getLogger().log(Level.SEVERE, "It is recommended that you download");
-			Bukkit.getLogger().log(Level.SEVERE, "the latest version from Spigot.");
-			Bukkit.getLogger().log(Level.SEVERE, "[-------------------------------]");
+			Bukkit.getLogger().log(Level.INFO, "[-------------------------------]");
+			Bukkit.getLogger().log(Level.INFO, "There is an update available for Assault the Nexus.");
+			Bukkit.getLogger().log(Level.INFO, "It is recommended that you download");
+			Bukkit.getLogger().log(Level.INFO, "the latest version from Spigot.");
+			Bukkit.getLogger().log(Level.INFO, "[-------------------------------]");
 		}
 		loadLang();
 		new InvisibilityListeners(this);
