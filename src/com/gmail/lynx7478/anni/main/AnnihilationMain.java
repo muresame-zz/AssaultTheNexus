@@ -57,7 +57,9 @@ import com.gmail.lynx7478.anni.voting.ScoreboardAPI;
 import com.gmail.lynx7478.anni.voting.VoteMapManager;
 
 public class AnnihilationMain extends JavaPlugin implements Listener
-{ 
+{
+	
+//														PLUGIN IS NOW FREE AND OPEN SOURCE.	
 	//public static boolean useProtocalHack = false;
 	//public static final String Name = "Annihilation";
 
