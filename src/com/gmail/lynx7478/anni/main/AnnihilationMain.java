@@ -654,7 +654,7 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			{
 				try
 				{
-					URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=19086");
+					URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=55942");
 					URLConnection con = url.openConnection();
 					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 					String inputLine;
