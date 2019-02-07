@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.gmail.lynx7478.anni.main.AnnihilationMain;
 import com.gmail.lynx7478.anni.main.Lang;
+import com.gmail.lynx7478.anni.utils.VersionUtils;
 
 public class CivilianKit extends Kit
 {
@@ -22,7 +23,19 @@ public class CivilianKit extends Kit
 	@Override
 	public boolean Initialize()
 	{
-		loadout = new Loadout().addWoodSword().addWoodPick().addWoodAxe().addSoulboundItem(new ItemStack(Material.WORKBENCH)).addNavCompass().finalizeLoadout();
+		Material mat = null;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			mat = Material.WORKBENCH;
+		}else
+		{
+			try {
+				mat = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "CRAFTING_TABLE");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		loadout = new Loadout().addWoodSword().addWoodPick().addWoodAxe().addSoulboundItem(new ItemStack(mat)).addNavCompass().finalizeLoadout();
 		return true;
 	}
 
@@ -35,7 +48,19 @@ public class CivilianKit extends Kit
 	@Override
 	public IconPackage getIconPackage()
 	{
-		return new IconPackage(new ItemStack(Material.WORKBENCH), Lang.CIVILIANLORE.toStringArray());
+		Material mat = null;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			mat = Material.WORKBENCH;
+		}else
+		{
+			try {
+				mat = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "CRAFTING_TABLE");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		return new IconPackage(new ItemStack(mat), Lang.CIVILIANLORE.toStringArray());
 //		return new IconPackage(new ItemStack(Material.WORKBENCH), 
 //				new String[]{	aqua+"You are the backbone.", 
 //								"",

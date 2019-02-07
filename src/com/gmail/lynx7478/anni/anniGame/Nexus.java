@@ -31,10 +31,33 @@ import com.gmail.lynx7478.anni.voting.ScoreboardAPI;
 
 public class Nexus implements Listener
 {
+	
+	private Sound anvil;
+	private Sound explode;
+	private Sound note;
+	
 	public Nexus(AnniTeam team)
 	{
 		this.Team = team;
 		this.Location = null;
+		
+		if(!VersionUtils.getVersion().contains("13") && !VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10"))
+		{
+			anvil = Sound.ANVIL_LAND;
+			explode = Sound.EXPLODE;
+			note = Sound.NOTE_PIANO;
+		}else
+		{
+			try {
+				anvil = (Sound) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Sound"), "BLOCK_ANVIL_LAND");
+				explode = (Sound) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Sound"), "ENTITY_GENERIC_EXPLODE");
+				note = (Sound) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Sound"), "BLOCK_NOTE_BLOCK_XYLOPHONE");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 	
 	public final AnniTeam Team;
@@ -90,25 +113,14 @@ public class Nexus implements Listener
 							AnniEvent.callEvent(e);
 							if(!e.isCancelled() && e.getDamage() > 0)
 							{
-								if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
-									loc.getWorld().playSound(loc, Sound.ANVIL_LAND, 1F, (float)Math.random());
-								}else{
-									try {
-										Class<Enum> cls = (Class<Enum>) Class.forName("org.bukkit.Sound");
-										loc.getWorld().playSound(loc, (Sound) Enum.valueOf(cls, "BLOCK_ANVIL_LAND"), 1F, (float)Math.random());
-									} catch (ClassNotFoundException e1) {
-										e1.printStackTrace();
-									}
-								}
+									loc.getWorld().playSound(loc, anvil, 1F, (float)Math.random());
 								Team.setHealth(Team.getHealth()-(e.getDamage()));
 								
 								for(AnniPlayer player : Team.getPlayers())
 								{
 									Player pl = player.getPlayer();
 									if(pl != null)
-										if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
-											pl.playSound(pl.getLocation(), Sound.NOTE_PIANO, 1f, 2.1f);
-										}
+											pl.playSound(pl.getLocation(), note, 1f, 2.1f);
 								}
 								String msg = Lang.NEXUSDAMAGE.toString().replaceAll("%PLAYER%", p.getTeam().getColor()+p.getName()).replaceAll("%NEXUS%", this.Team.getExternalColoredName()).replaceAll("%HEALTH%", Integer.toString(this.Team.getHealth()));
 								for(Player pl : Bukkit.getOnlinePlayers())
@@ -143,12 +155,7 @@ public class Nexus implements Listener
 										ImageMessage message =  new ImageMessage(image, 10, ImageChar.MEDIUM_SHADE.getChar()).appendText(lore);
 										for(Player pl : Bukkit.getOnlinePlayers())
 										{
-											if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
-												pl.getWorld().playSound(pl.getLocation(), Sound.EXPLODE, 1F, .8F);
-											}else{
-												Class<Enum> cls = (Class<Enum>) Class.forName("org.bukkit.Sound");
-												pl.getWorld().playSound(pl.getLocation(), (Sound) Enum.valueOf(cls, "ENTITY_GENERIC_EXPLODE"), 1F, .8F);
-											}
+												pl.getWorld().playSound(pl.getLocation(), explode, 1F, .8F);
 											message.sendToPlayer(pl);
 											AnnounceBar.getInstance().getBar().sendToPlayer(pl, p.getTeam().getColor()+p.getName()+ChatColor.GRAY+" has destroyed the  "+this.Team.getColor()+this.Team.getName()+" nexus", 0);
 										}
@@ -195,12 +202,7 @@ public class Nexus implements Listener
 				ImageMessage message =  new ImageMessage(image, 10, ImageChar.MEDIUM_SHADE.getChar()).appendText(lore);
 				for(Player pl : Bukkit.getOnlinePlayers())
 				{
-					if(!VersionUtils.getVersion().contains("v1_9") && !VersionUtils.getVersion().contains("v1_11") && !VersionUtils.getVersion().contains("v1_10")){
-						pl.getWorld().playSound(pl.getLocation(), Sound.EXPLODE, 1F, .8F);
-					}else{
-						Class<Enum> cls = (Class<Enum>) Class.forName("org.bukkit.Sound");
-						pl.getWorld().playSound(pl.getLocation(), (Sound) Enum.valueOf(cls, "ENTITY_GENERIC_EXPLODE"), 1F, .8F);
-					}
+						pl.getWorld().playSound(pl.getLocation(), explode, 1F, .8F);
 					message.sendToPlayer(pl);
 					AnnounceBar.getInstance().getBar().sendToPlayer(pl, ChatColor.GRAY + "The " + this.Team.getColoredName() + " has been defeated due to all players dying.", 0);
 				}

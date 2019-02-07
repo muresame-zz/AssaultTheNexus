@@ -39,7 +39,28 @@ public class Loadout
 	
 	public Loadout addWoodSword()
 	{
-		return addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_SWORD)));
+		Loadout r = null;
+		try {
+		if(!VersionUtils.getVersion().contains("13")) {
+			r = addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_SWORD)));
+		}else {
+			r = addItem(KitUtils.addSoulbound(new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WOODEN_SWORD"))));
+		}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return r;
+/*		try {
+		if(!VersionUtils.getVersion().contains("13"))
+			return addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_SWORD)));
+		else
+			return addItem(KitUtils.addSoulbound(new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WOODEN_SWORD"))));
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null; */
 	}
 	
 	public Loadout addStoneSword()
@@ -49,12 +70,34 @@ public class Loadout
 	
 	public Loadout addGoldSword()
 	{
-		return addItem(KitUtils.addSoulbound(new ItemStack(Material.GOLD_SWORD)));
+		Loadout r = null;
+		try {
+		if(!VersionUtils.getVersion().contains("13")) {
+			r = addItem(KitUtils.addSoulbound(new ItemStack(Material.GOLD_SWORD)));
+		}else {
+			r = addItem(KitUtils.addSoulbound(new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "GOLDEN_SWORD"))));
+		}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return r;
 	}
 	
 	public Loadout addWoodPick()
 	{
-		return addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_PICKAXE)));
+		Loadout r = null;
+		try {
+		if(!VersionUtils.getVersion().contains("13")) {
+			r = addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_PICKAXE)));
+		}else {
+			r = addItem(KitUtils.addSoulbound(new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WOODEN_PICKAXE"))));
+		}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return r;
 	}
 	
 	public Loadout addStonePick()
@@ -64,12 +107,34 @@ public class Loadout
 	
 	public Loadout addWoodAxe()
 	{
-		return addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_AXE)));
+		Loadout r = null;
+		try {
+		if(!VersionUtils.getVersion().contains("13")) {
+			r = addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_AXE)));
+		}else {
+			r = addItem(KitUtils.addSoulbound(new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WOODEN_AXE"))));
+		}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return r;
 	}
 	
 	public Loadout addWoodShovel()
 	{
-		return addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_SPADE)));
+		Loadout r = null;
+		try {
+		if(!VersionUtils.getVersion().contains("13")) {
+			r = addItem(KitUtils.addSoulbound(new ItemStack(Material.WOOD_SPADE)));
+		}else {
+			r = addItem(KitUtils.addSoulbound(new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WOODEN_SHOVEL"))));
+		}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return r;
 	}
 	
 	@SuppressWarnings("deprecation")

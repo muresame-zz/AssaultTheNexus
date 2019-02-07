@@ -22,6 +22,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import com.gmail.lynx7478.anni.utils.VersionUtils;
+
 /**
  * A {@link com.gmail.lynx7478.anni.itemMenus.StaticMenuItem} that closes the
  * {@link com.gmail.lynx7478.anni.itemMenus.ItemMenu}.
@@ -29,14 +31,28 @@ import org.bukkit.inventory.ItemStack;
 public class CloseMenuItem extends StaticMenuItem
 {
 
+	private static Material mat;
+	
+	
 	public CloseMenuItem()
 	{
-		super(ChatColor.RED + "Close", new ItemStack(Material.RECORD_4));
+		super(ChatColor.RED + "Close", new ItemStack(mat));
 	}
 
 	@Override
 	public void onItemClick(ItemClickEvent event)
 	{
 		event.setWillClose(true);
+	}
+	
+	public static void init() throws ClassNotFoundException
+	{
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			mat = Material.RECORD_4;
+		}else
+		{
+			mat = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "LEGACY_RECORD_4");
+		}
 	}
 }

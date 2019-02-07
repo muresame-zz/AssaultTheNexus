@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.gmail.lynx7478.anni.main.AnnihilationMain;
+import com.gmail.lynx7478.anni.utils.VersionUtils;
 
 /**
  * A Menu controlled by ItemStacks in an Inventory.
@@ -22,6 +23,8 @@ public class ItemMenu
 	private Size size;
 	private MenuItem[] items;
 	private ItemMenu parent;
+	//TODO: Lazy 1.13 fix.
+	private Material mat;
 
 	/**
 	 * The {@link com.gmail.lynx7478.anni.itemMenus.StaticMenuItem} that appears in empty
@@ -34,10 +37,17 @@ public class ItemMenu
 //			new ItemStack(Material.STAINED_GLASS_PANE, 1,
 //					DyeColor.GRAY.getData()));
 	
-	@SuppressWarnings("deprecation")
-	private static final MenuItem EMPTY_SLOT_ITEM = new StaticMenuItem(" ",
-			new ItemStack(Material.STAINED_GLASS_PANE, 1,
-					(byte) 7));
+	
+	
+	//TODO: I honestly have no idea how to fix this.
+	
+//	@SuppressWarnings("deprecation")
+//	private static final MenuItem EMPTY_SLOT_ITEM = new StaticMenuItem(" ",
+//		new ItemStack(Material.STAINED_GLASS_PANE, 1,
+//				(byte) 7));
+	//TODO: !!! INCLUDE THIS IN THE CLASS INIT !!!
+	
+	private static MenuItem EMPTY_SLOT_ITEM = null;
 
 	/**
 	 * Creates an {@link com.gmail.lynx7478.anni.itemMenus.MenuItem}.
@@ -57,6 +67,21 @@ public class ItemMenu
 		this.size = size;
 		this.items = new MenuItem[size.getSize()];
 		this.parent = parent;
+		
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			EMPTY_SLOT_ITEM = new StaticMenuItem(" ",
+					new ItemStack(Material.STAINED_GLASS_PANE, 1,
+							(byte) 7));
+		}else
+		{
+		try {
+			EMPTY_SLOT_ITEM = new StaticMenuItem(" ",
+					new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material") , "WHITE_STAINED_GLASS_PANE")));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		}
 	}
 
 	/**
@@ -297,8 +322,7 @@ public class ItemMenu
 								{
 									public void run()
 									{
-										Player p = Bukkit
-												.getPlayerExact(playerName);
+										Player p = Bukkit.getPlayerExact(playerName);
 										if (p != null)
 										{
 											parent.open(p);

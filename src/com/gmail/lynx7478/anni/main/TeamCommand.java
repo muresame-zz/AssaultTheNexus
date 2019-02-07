@@ -35,13 +35,14 @@ import com.gmail.lynx7478.anni.itemMenus.ItemMenu;
 import com.gmail.lynx7478.anni.itemMenus.ItemMenu.Size;
 import com.gmail.lynx7478.anni.kits.CustomItem;
 import com.gmail.lynx7478.anni.kits.KitUtils;
+import com.gmail.lynx7478.anni.utils.VersionUtils;
 
 public class TeamCommand implements CommandExecutor, Listener
 {
 	//private AnnihilationMain plugin;
 	private ItemMenu menu;
 	private Map<ChatColor,ImageMessage> messages;
-	public TeamCommand(JavaPlugin plugin)
+	public TeamCommand(JavaPlugin plugin) throws ClassNotFoundException
 	{
 		menu = new ItemMenu(Lang.TEAMMENU.toString(),Size.ONE_LINE);
 		messages = new EnumMap<ChatColor,ImageMessage>(ChatColor.class);
@@ -89,15 +90,55 @@ public class TeamCommand implements CommandExecutor, Listener
 			else
 				datavalue = (byte)4;
 			
-			ActionMenuItem item = new ActionMenuItem(team.getExternalColoredName(),new ItemClickHandler(){
-				@Override
-				public void onItemClick(ItemClickEvent event)
+			
+			//TODO: Get a decent fix and remove shit code.
+			
+			if(!VersionUtils.getVersion().contains("13"))
+			{
+				ActionMenuItem item = new ActionMenuItem(team.getExternalColoredName(),new ItemClickHandler(){
+					@Override
+					public void onItemClick(ItemClickEvent event)
+					{
+						event.getPlayer().performCommand("Team "+team.getName());
+						event.setWillClose(true);
+					}},new ItemStack(Material.WOOL,0,datavalue),new String[]{});
+				menu.setItem(x, item);
+				x++;
+			}else
+			{
+				String color = null;
+				switch(datavalue)
 				{
-					event.getPlayer().performCommand("Team "+team.getName());
-					event.setWillClose(true);
-				}},new ItemStack(Material.WOOL,0,datavalue),new String[]{});
-			menu.setItem(x, item);
-			x++;
+				case 14:
+					color = "RED";
+				case 11:
+					color = "BLUE";
+				case 13:
+					color = "GREEN";
+				case 4:
+					color = "YELLOW";
+				}
+				Material wl = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), color+"_WOOL");
+				
+				ActionMenuItem item = new ActionMenuItem(team.getExternalColoredName(),new ItemClickHandler(){
+					@Override
+					public void onItemClick(ItemClickEvent event)
+					{
+						event.getPlayer().performCommand("Team "+team.getName());
+						event.setWillClose(true);
+					}},new ItemStack(wl,0),new String[]{});
+				menu.setItem(x, item);
+				x++;
+			} //TODO: Not sure if this will work. This would go here, but because of datavalue stuff in 1.13, it's deprecated and actually does not work.
+		}
+		
+		Material mat;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			mat = Material.WOOL;
+		}else
+		{
+			mat = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WHITE_WOOL");
 		}
 		menu.setItem(4, new ActionMenuItem(Lang.LEAVE.toString(),new ItemClickHandler(){
 			@Override
@@ -105,7 +146,7 @@ public class TeamCommand implements CommandExecutor, Listener
 			{
 				event.getPlayer().performCommand("Team Leave");
 				event.setWillClose(true);
-			}},new ItemStack(Material.WOOL),new String[]{}));
+			}},new ItemStack(mat),new String[]{}));
 	}
 	
 	@EventHandler(priority=EventPriority.HIGH)

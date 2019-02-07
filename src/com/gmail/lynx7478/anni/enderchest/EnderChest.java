@@ -44,7 +44,8 @@ public class EnderChest implements Listener {
 			if(e.getClickedBlock().getType() == Material.ENDER_CHEST){
 				if(GameVars.getUseEC()){
 					e.setCancelled(true);
-					if(VersionUtils.getVersion().contains("v1_9")){
+					if(VersionUtils.getVersion().contains("v1_9") || VersionUtils.getVersion().contains("13") || VersionUtils.getVersion().contains("10")
+							|| VersionUtils.getVersion().contains("11") || VersionUtils.getVersion().contains("12")){
 						try {
 							Class<Enum> cls = (Class<Enum>) Class.forName("org.bukkit.Sound");
 							p.playSound(p.getLocation(), (Sound) Enum.valueOf(cls, "BLOCK_CHEST_OPEN"), 10F, 10F);

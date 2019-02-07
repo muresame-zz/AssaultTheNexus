@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.gmail.lynx7478.anni.anniGame.AnniTeam;
 import com.gmail.lynx7478.anni.kits.KitUtils;
+import com.gmail.lynx7478.anni.utils.VersionUtils;
 
 public class TeamBlock
 {
@@ -84,10 +85,29 @@ public class TeamBlock
 		return this.getName();
 	}
 	
-	private ItemStack toItemStack() 
+	private ItemStack toItemStack() throws ClassNotFoundException 
 	{
 		@SuppressWarnings("deprecation")
-		ItemStack stack = new ItemStack(Material.WOOL,1,(short)0,datavalue);
+		ItemStack stack;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			stack = new ItemStack(Material.WOOL,1,(short)0,datavalue);
+		}else
+		{
+			Material mat = null;
+			switch(datavalue) {
+				case 14:
+					mat = (Material) Enum.valueOf(( (Class<Enum>)Class.forName("org.bukkit.Material")), "RED_WOOL");
+				case 11:
+					mat = (Material) Enum.valueOf(( (Class<Enum>)Class.forName("org.bukkit.Material")), "BLUE_WOOL");
+				case 13:
+					mat = (Material) Enum.valueOf(( (Class<Enum>)Class.forName("org.bukkit.Material")), "GREEN_WOOL");
+				case 4:
+					mat = (Material) Enum.valueOf(( (Class<Enum>)Class.forName("org.bukkit.Material")), "YELLOW_WOOL");
+			}
+			stack = new ItemStack(mat,1);
+					
+		}
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(getName());
 		if (lore != null) 
@@ -96,12 +116,12 @@ public class TeamBlock
 		return KitUtils.addSoulbound(stack);
 	}
 	
-	public void giveToPlayer(final Player player)
+	public void giveToPlayer(final Player player) throws IllegalArgumentException, ClassNotFoundException
 	{
 		ItemStack[] inv = player.getInventory().getContents();
 		for(int x = 0; x < inv.length; x++)
 		{
-			if(inv[x] != null && inv[x].getType() == Material.WOOL)
+			if(inv[x] != null && inv[x].getType().name().contains("WOOL"))
 			{
 				if(KitUtils.itemHasName(inv[x], this.getName()))
 					player.getInventory().clear(x);

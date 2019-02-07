@@ -13,12 +13,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.gmail.lynx7478.anni.anniMap.GameMap;
 import com.gmail.lynx7478.anni.main.AnnihilationMain;
+import com.gmail.lynx7478.anni.utils.VersionUtils;
 
 public class BossRewards implements Listener {
 	
 	private Inventory inventory;
 	
-	public BossRewards()
+	public BossRewards() throws ClassNotFoundException
 	{
 		inventory = Bukkit.createInventory(null, 27, ChatColor.DARK_PURPLE+"Boss Rewards setter.");
 		if(Game.getGameMap().getBossRewards() != null)
@@ -72,18 +73,32 @@ public class BossRewards implements Listener {
 		}
 	}
 	
-	private ItemStack finish()
+	private ItemStack finish() throws ClassNotFoundException
 	{
-		ItemStack a = new ItemStack(Material.WOOL, 1, (byte)5);
+		ItemStack a;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			a = new ItemStack(Material.WOOL, 1, (byte) 5);
+		}else
+		{
+			a = new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "GREEN_WOOL"));
+		}
 		ItemMeta m = a.getItemMeta();
 		m.setDisplayName(ChatColor.GREEN+"Finish");
 		a.setItemMeta(m);
 		return a;
 	}
 	
-	private ItemStack discard()
+	private ItemStack discard() throws ClassNotFoundException
 	{
-		ItemStack a = new ItemStack(Material.WOOL, 1, (byte)14);
+		ItemStack a;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			a = new ItemStack(Material.WOOL, 1, (byte) 14);
+		}else
+		{
+			a = new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "RED_WOOL"));
+		}
 		ItemMeta m = a.getItemMeta();
 		m.setDisplayName(ChatColor.RED+"Discard");
 		a.setItemMeta(m);

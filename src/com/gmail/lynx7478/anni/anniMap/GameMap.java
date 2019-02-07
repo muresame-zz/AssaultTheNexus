@@ -44,6 +44,7 @@ import com.gmail.lynx7478.anni.main.AnnihilationMain;
 import com.gmail.lynx7478.anni.utils.InventoryUtils;
 import com.gmail.lynx7478.anni.utils.Loc;
 import com.gmail.lynx7478.anni.utils.MapKey;
+import com.gmail.lynx7478.anni.utils.VersionUtils;
 import com.gmail.lynx7478.anni.voting.AutoRestarter;
 
 public final class GameMap extends AnniMap implements Listener
@@ -76,6 +77,8 @@ public final class GameMap extends AnniMap implements Listener
 	private boolean canDamageNexus;
 	private int damageMultiplier;
 	private AutoRestarter restarter = null;
+	
+	private Material brFurnace;
 	
 	public GameMap(String worldName, File mapDirectory)
 	{
@@ -394,6 +397,19 @@ public final class GameMap extends AnniMap implements Listener
 				}
 			}
 		}
+		//TODO: 1.13 stuff.
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			brFurnace = Material.BURNING_FURNACE;
+		}else
+		{
+			try {
+				brFurnace = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "LEGACY_BURNING_FURNACE");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void unLoadMap()
@@ -637,7 +653,7 @@ public final class GameMap extends AnniMap implements Listener
 			if(b != null)
 			{
 				//Bukkit.getLogger().info("Error test 1");
-				if(b.getType() == Material.FURNACE || b.getType() == Material.BURNING_FURNACE)
+				if(b.getType().name().contains("FURNACE"))
 				{
 					//Bukkit.getLogger().info("Error test 1");
 					MapKey key = MapKey.getKey(b.getLocation());
@@ -668,7 +684,7 @@ public final class GameMap extends AnniMap implements Listener
 	{
 		if(event.getBlock() != null && event.getPlayer().getGameMode() != GameMode.CREATIVE)
 		{
-			if(event.getBlock().getType() == Material.FURNACE || event.getBlock().getType() == Material.BURNING_FURNACE)
+			if(event.getBlock().getType().name().contains("FURNACE"))
 			{
 				MapKey key = MapKey.getKey(event.getBlock().getLocation());
 				if(this.enderFurnaces.containsKey(key))
@@ -758,10 +774,11 @@ public final class GameMap extends AnniMap implements Listener
 			try
 			{
 				Block block = furnace.getLocation().toLocation().getBlock();
-				if(block.getType() != Material.FURNACE && block.getType() != Material.BURNING_FURNACE)
-					block.setType(Material.BURNING_FURNACE);
+				if(!block.getType().name().contains("FURNACE"))
+					
+					block.setType(brFurnace);
 				
-				Furnace f = new Furnace(Material.BURNING_FURNACE);
+				Furnace f = new Furnace(brFurnace);
 				f.setFacingDirection(furnace.getFacingDirection());
 				BlockState s = block.getState();
 				s.setData(f);

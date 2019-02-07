@@ -41,6 +41,7 @@ import com.gmail.lynx7478.anni.announcementBar.Announcement;
 import com.gmail.lynx7478.anni.enderchest.EnderChest;
 import com.gmail.lynx7478.anni.enderchest.EnderChestCommand;
 import com.gmail.lynx7478.anni.itemMenus.ActionMenuItem;
+import com.gmail.lynx7478.anni.itemMenus.CloseMenuItem;
 import com.gmail.lynx7478.anni.itemMenus.ItemClickEvent;
 import com.gmail.lynx7478.anni.itemMenus.ItemClickHandler;
 import com.gmail.lynx7478.anni.itemMenus.MenuItem;
@@ -128,6 +129,14 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 			}
 		}
 		
+// 		Stuff so 1.13 doesn't break.
+		
+		try {
+			CloseMenuItem.init();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		//TODO: PermissionsEx Hook.
 		if(GameVars.usePEX())
 		{
@@ -143,7 +152,12 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		AnniCommand.register(this);
 		buildAnniCommand();
 		//VoteMapManager.Enable(this);
-		new MapBuilder(this);
+		try {
+			new MapBuilder(this);
+		} catch (ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		
 		
@@ -176,7 +190,12 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 		
 		ScoreboardAPI.registerListener(this); //needs to come after anniplayer loading, checks anni players
 		
-		new TeamCommand(this);
+		try {
+			new TeamCommand(this);
+		} catch (ClassNotFoundException e1) {
+
+			e1.printStackTrace();
+		}
 		new GameListeners(this);
 		new AreaCommand(this);
 		new EnderChest();
@@ -189,7 +208,11 @@ public class AnnihilationMain extends JavaPlugin implements Listener
 //		{
 //			this.hasEssentials = false;
 //		}
-		this.getServer().getPluginManager().registerEvents(new SpecificBreaking(), this);
+		try {
+			this.getServer().getPluginManager().registerEvents(new SpecificBreaking(), this);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		this.getCommand("changeteam").setExecutor(new ChangeTeamCommand());
 		

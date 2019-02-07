@@ -53,6 +53,7 @@ import com.gmail.lynx7478.anni.kits.KitUtils;
 import com.gmail.lynx7478.anni.main.AnnihilationMain;
 import com.gmail.lynx7478.anni.mapBuilder.TeamBlock.TeamBlockHandler;
 import com.gmail.lynx7478.anni.utils.Loc;
+import com.gmail.lynx7478.anni.utils.VersionUtils;
 
 
 public class MapBuilder implements Listener
@@ -142,7 +143,7 @@ public class MapBuilder implements Listener
 		return getReadableLocation(loc.toLocation(),numColor,normalColor, withWorld);
 	}
 	
-	public MapBuilder(Plugin plugin)
+	public MapBuilder(Plugin plugin) throws ClassNotFoundException
 	{
 		//this.plugin = plugin;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -157,7 +158,15 @@ public class MapBuilder implements Listener
 				event.setWillClose(true);
 			}}, 
 			new ItemStack(Material.BLAZE_ROD), ChatColor.GREEN+"Click to get the",ChatColor.GREEN+"Area Helper Wand"));
-	
+		//TODO: 1.13 Stuff.
+		Material bed;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			bed = Material.BED;
+		}else
+		{
+			bed = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "RED_BED");
+		}
 		this.items.put(X.Spawns,new ActionMenuItem("Set Team Spawns", new ItemClickHandler(){
 
 			@Override
@@ -168,7 +177,12 @@ public class MapBuilder implements Listener
 					TeamBlock t = TeamBlock.getByTeam(team);
 					t.clearLines();
 					t.addLine(Action.LEFT_CLICK_BLOCK, ChatColor.DARK_PURPLE, "add a "+team.getColor()+team.getName()+" spawn.");
-					t.giveToPlayer(event.getPlayer());
+					try {
+						t.giveToPlayer(event.getPlayer());
+					} catch (IllegalArgumentException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				Object obj = new TeamBlockHandler()
 				{
@@ -185,7 +199,7 @@ public class MapBuilder implements Listener
 				};
 				setPlayerMeta(event.getPlayer(),"TeamHandler",obj);
 				event.setWillClose(true);
-			}},new ItemStack(Material.BED),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Team Spawns"));
+			}},new ItemStack(bed),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Team Spawns"));
 		
 		this.items.put(X.SpectatorSpawns,new ActionMenuItem("Set Team Spectator Spawns", new ItemClickHandler(){
 
@@ -197,7 +211,12 @@ public class MapBuilder implements Listener
 					TeamBlock t = TeamBlock.getByTeam(team);
 					t.clearLines();
 					t.addLine(Action.LEFT_CLICK_BLOCK, ChatColor.DARK_PURPLE, "set "+team.getColor()+team.getName()+" spectator location.");
-					t.giveToPlayer(event.getPlayer());
+					try {
+						t.giveToPlayer(event.getPlayer());
+					} catch (IllegalArgumentException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				//TODO: Example.
 				Object obj = new TeamBlockHandler()
@@ -228,7 +247,12 @@ public class MapBuilder implements Listener
 					TeamBlock t = TeamBlock.getByTeam(team);
 					t.clearLines();
 					t.addLine(Action.LEFT_CLICK_BLOCK, ChatColor.DARK_PURPLE, "set "+team.getColor()+team.getName()+" Nexus.");
-					t.giveToPlayer(event.getPlayer());
+					try {
+						t.giveToPlayer(event.getPlayer());
+					} catch (IllegalArgumentException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				Object obj = new TeamBlockHandler()
 				{
@@ -258,7 +282,12 @@ public class MapBuilder implements Listener
 					TeamBlock t = TeamBlock.getByTeam(team);
 					t.clearLines();
 					t.addLine(Action.LEFT_CLICK_BLOCK, ChatColor.DARK_PURPLE, "set a "+team.getColor()+team.getName()+" team join sign.");
-					t.giveToPlayer(event.getPlayer());
+					try {
+						t.giveToPlayer(event.getPlayer());
+					} catch (IllegalArgumentException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				Object obj = new TeamBlockHandler()
 				{
@@ -307,6 +336,14 @@ public class MapBuilder implements Listener
 				event.setWillClose(true);
 			}},new ItemStack(Material.SIGN),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Team Join Signs"));
 		
+		Material br;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			br = Material.BREWING_STAND_ITEM;
+		}else
+		{
+			br = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "BREWING_STAND");
+		}
 		this.items.put(X.BrewingShop, new ActionMenuItem("Set Brewing Shop", new ItemClickHandler(){
 
 			@Override
@@ -314,7 +351,7 @@ public class MapBuilder implements Listener
 			{
 				event.getPlayer().getInventory().addItem(CustomItem.BREWINGSHOP.toItemStack(1));
 				event.setWillClose(true);
-			}},new ItemStack(Material.BREWING_STAND_ITEM),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Brewing Shops"));
+			}},new ItemStack(br),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Brewing Shops"));
 		
 		this.items.put(X.WeaponShop, new ActionMenuItem("Set Weapon Shop", new ItemClickHandler(){
 
@@ -334,15 +371,30 @@ public class MapBuilder implements Listener
 				event.setWillClose(true);
 			}},new ItemStack(Material.DIAMOND),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Diamond Spawns"));
 		
+		Material eye;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			eye = Material.EYE_OF_ENDER;
+		}else
+		{
+			eye = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "ENDER_EYE");
+		}
 		this.items.put(X.EnderFurnaces, new ActionMenuItem("Set Ender Furnace", new ItemClickHandler(){
-
 			@Override
 			public void onItemClick(ItemClickEvent event)
 			{
 				event.getPlayer().getInventory().addItem(CustomItem.ENDERFURNACE.toItemStack(1));
 				event.setWillClose(true);
-			}},new ItemStack(Material.EYE_OF_ENDER),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Ender Furnaces"));
+			}},new ItemStack(eye),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Ender Furnaces"));
 		
+		Material watch;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			watch = Material.WATCH;
+		}else
+		{
+			watch = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "CLOCK");
+		}
 		this.items.put(X.PhaseTime, new ActionMenuItem("Set Phase Time", new ItemClickHandler(){
 
 			@Override
@@ -376,7 +428,7 @@ public class MapBuilder implements Listener
 						return false;
 					}});
 				event.setWillClose(true);
-			}},new ItemStack(Material.WATCH),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Game Phase Time"));
+			}},new ItemStack(watch),ChatColor.GREEN+"Click to set:",ChatColor.GREEN+"Game Phase Time"));
 		
 		this.items.put(X.RegeneratingBlocks, new ActionMenuItem("Regenerating Block Helper", new ItemClickHandler(){
 
@@ -387,13 +439,21 @@ public class MapBuilder implements Listener
 				event.setWillClose(true);
 			}},new ItemStack(Material.STICK),ChatColor.GREEN+"Click to setup:",ChatColor.GREEN+"Regenerating Blocks"));
 		
+		Material ds;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			ds = Material.DIAMOND_SPADE;
+		}else
+		{
+			ds = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "DIAMOND_SHOVEL");
+		}
 		this.items.put(X.UnplaceableBlockWand, new ActionMenuItem("Unplaceable Block Wand", new ItemClickHandler(){
 			@Override
 			public void onItemClick(ItemClickEvent event)
 			{
 				event.getPlayer().getInventory().addItem(CustomItem.UNPLACEABLEBLOCKSWAND.toItemStack(1));
 				event.setWillClose(true);
-			}},new ItemStack(Material.DIAMOND_SPADE),ChatColor.GREEN+"Click to setup:",ChatColor.GREEN+"Unplaceable Blocks"));
+			}},new ItemStack(ds),ChatColor.GREEN+"Click to setup:",ChatColor.GREEN+"Unplaceable Blocks"));
 		//TODO: Bosses
 		this.items.put(X.Bosses, new ActionMenuItem(ChatColor.AQUA+"Bosses Wand", new ItemClickHandler(){
 			@Override
@@ -472,7 +532,13 @@ public class MapBuilder implements Listener
 					@Override
 					public void onItemClick(ItemClickEvent e) 
 					{
-						BossRewards rewards = new BossRewards();
+						BossRewards rewards = null;
+						try {
+							rewards = new BossRewards();
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						rewards.openInventory(e.getPlayer());
 					}
 			
@@ -496,7 +562,12 @@ public class MapBuilder implements Listener
 		if(wrap == null)
 		{
 			ItemMenu map = new ItemMenu("Annihilation Map Config Menu", Size.THREE_LINE);
-			buildMapMenu(map);
+			try {
+				buildMapMenu(map);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			ItemMenu main = new ItemMenu("Annihilation Main Config Menu", Size.THREE_LINE, map);
 			wrap = new Wrapper(main);
 			this.mapBuilders.put(player.getUniqueId(), wrap);
@@ -504,7 +575,7 @@ public class MapBuilder implements Listener
 		return wrap;
 	}
 	
-	private void buildMapMenu(ItemMenu menu)
+	private void buildMapMenu(ItemMenu menu) throws ClassNotFoundException
 	{
 		menu.setItem(4, this.items.get(X.UnplaceableBlockWand));
 		menu.setItem(9, this.items.get(X.EnderFurnaces));
@@ -512,6 +583,14 @@ public class MapBuilder implements Listener
 		menu.setItem(11, this.items.get(X.RegeneratingBlocks));
 		menu.setItem(12, this.items.get(X.AreaWand));
 		
+		Material gls;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			gls = Material.STAINED_GLASS_PANE;
+		}else
+		{
+			gls = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WHITE_STAINED_GLASS_PANE");
+		}
 		menu.setItem(13, new ActionMenuItem("Back to Main Menu",new ItemClickHandler(){
 
 			@Override
@@ -528,11 +607,16 @@ public class MapBuilder implements Listener
 						Player p = Bukkit.getPlayer(ID);
 						if (p != null)
 						{
-							updatePlayerMapBuilder(p,wrap).open(p);
+							try {
+								updatePlayerMapBuilder(p,wrap).open(p);
+							} catch (ClassNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				}, 3);
-			}},new ItemStack(Material.STAINED_GLASS_PANE),"Click to return to the Main menu."));
+			}},new ItemStack(gls),"Click to return to the Main menu."));
 		
 		menu.setItem(14, this.items.get(X.Nexus));
 		menu.setItem(15, this.items.get(X.Spawns));
@@ -548,15 +632,23 @@ public class MapBuilder implements Listener
 		//TODO: To add items to the mapbuilder.
 	}
 	
-	public void openMapBuilder(Player player)
+	public void openMapBuilder(Player player) throws ClassNotFoundException
 	{
 		Wrapper mainMenu = getItemMenu(player);
 		updatePlayerMapBuilder(player,mainMenu).open(player);
 	}
 	
-	private ItemMenu updatePlayerMapBuilder(final Player player, final Wrapper wrap)
+	private ItemMenu updatePlayerMapBuilder(final Player player, final Wrapper wrap) throws ClassNotFoundException
 	{
 		final ItemMenu mainMenu = wrap.main;
+		Material wl;
+		if(!VersionUtils.getVersion().contains("13"))
+		{
+			wl = Material.WOOL;
+		}else
+		{
+			wl = (Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "WHITE_WOOL");
+		}
 		ActionMenuItem lobby = new ActionMenuItem("Set Lobby Location", new ItemClickHandler(){
 			@Override
 			public void onItemClick(ItemClickEvent event)
@@ -567,7 +659,12 @@ public class MapBuilder implements Listener
 					Game.LobbyMap.registerListeners(AnnihilationMain.getInstance());
 					event.getPlayer().sendMessage(ChatColor.GREEN+"Lobby created and spawn set!");
 					event.setWillUpdate(true);
-					updatePlayerMapBuilder(player,wrap);
+					try {
+						updatePlayerMapBuilder(player,wrap);
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else
 				{
@@ -576,7 +673,7 @@ public class MapBuilder implements Listener
 				}
 				
 			}}, 
-			new ItemStack(Material.WOOL), ChatColor.GREEN+"Click to set the Lobby to this location.");
+			new ItemStack(wl), ChatColor.GREEN+"Click to set the Lobby to this location.");
 		
 		if(Game.LobbyMap == null)
 		{
@@ -624,7 +721,11 @@ public class MapBuilder implements Listener
 													player.sendMessage(ChatColor.RED+"Failed to load the map: "+ChatColor.GREEN+str);
 												else
 													player.sendMessage(ChatColor.GREEN+"Map Loaded!");
-												updatePlayerMapBuilder(player,wrap);
+												try {
+													updatePlayerMapBuilder(player,wrap);
+												} catch (ClassNotFoundException e) {
+													e.printStackTrace();
+												}
 											}
 										}}).open(player);
 								}
@@ -985,7 +1086,11 @@ public class MapBuilder implements Listener
 			final Player player = event.getPlayer();
 			if(KitUtils.itemHasName(player.getItemInHand(), CustomItem.MAPBUILDER.getName()))
 			{
-				this.openMapBuilder(player);
+				try {
+					this.openMapBuilder(player);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 				event.setCancelled(true);
 			}
 		}

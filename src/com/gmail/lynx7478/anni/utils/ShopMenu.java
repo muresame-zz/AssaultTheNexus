@@ -15,7 +15,11 @@ public class ShopMenu
 	{
 		weapon = new ItemMenu("Weapon Shop",Size.TWO_LINE);
 		brewing = new ItemMenu("Brewing Shop",Size.THREE_LINE);
-		buildBrewingShop(brewing);
+		try {
+			buildBrewingShop(brewing);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		buildWeaponShop(weapon);
 	}
 
@@ -99,7 +103,7 @@ public class ShopMenu
 		}
 	}
 	
-	private static void buildBrewingShop(ItemMenu menu)
+	private static void buildBrewingShop(ItemMenu menu) throws ClassNotFoundException
 	{
 		for(int x = 0; x < 27; x++)
 		{
@@ -115,7 +119,10 @@ public class ShopMenu
 					break;
 
 				case 0:
-					icon = new ItemStack(Material.BREWING_STAND_ITEM,1);
+					if(!VersionUtils.getVersion().contains("13"))
+						icon = new ItemStack(Material.BREWING_STAND_ITEM,1);
+					else
+						icon = new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "BREWING_STAND"),1);
 					cost = 10;
 					break;
 				case 1:
@@ -123,7 +130,10 @@ public class ShopMenu
 					cost = 1;
 					break;
 				case 2:
-					icon = new ItemStack(Material.NETHER_STALK,1);
+					if(!VersionUtils.getVersion().contains("13"))
+						icon = new ItemStack(Material.NETHER_STALK,1);
+					else
+						icon = new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "LEGACY_NETHER_STALK"),1);
 					cost = 5;
 					break;
 				//LINE 1
@@ -145,7 +155,10 @@ public class ShopMenu
 					cost = 3;
 					break;
 				case 12:
-					icon = new ItemStack(Material.SULPHUR,1);
+					if(!VersionUtils.getVersion().contains("13"))
+						icon = new ItemStack(Material.SULPHUR,1);
+					else
+						icon = new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "LEGACY_SULPHUR"),1);
 					cost = 3;
 					break;
 				//LINE 2
@@ -162,7 +175,10 @@ public class ShopMenu
 					cost = 2;
 					break;
 				case 20:
-					icon = new ItemStack(Material.SPECKLED_MELON,1);
+					if(!VersionUtils.getVersion().contains("13"))
+						icon = new ItemStack(Material.SPECKLED_MELON,1);
+					else
+						icon = new ItemStack((Material) Enum.valueOf((Class<Enum>) Class.forName("org.bukkit.Material"), "LEGACY_SPECKLED_MELON"),1);
 					cost = 2;
 					break;
 				case 21:
